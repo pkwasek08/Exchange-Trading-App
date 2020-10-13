@@ -1,0 +1,146 @@
+/*.navbar {
+    background: rgb(3, 145, 126);
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    min-height: 80px;
+    font-size: 16px; 
+    position: center;
+    //font-size: 5px;
+}*/
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.8s;
+
+}
+
+.menu {
+    position: left;
+    background: rgba(46, 46, 46, 1);
+    color: white;
+    font-size: 30px;
+}
+
+#main {
+    padding: 20px;
+    transition: 0.5s;
+    /*  -webkit-box-shadow: 0 80px 60px -60px #999;
+      -moz-box-shadow: 0 180px 160px -160px #999;
+      box-shadow: 0 180px 160px -160px #999;*/
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {
+        padding-top: 15px;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+    }
+}
+
+.fa {
+    margin: 10px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 8px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+}
+
+.sidenav a:hover {
+    background: rgba(46, 46, 46, 1);
+
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+body {
+    background: rgba(46, 46, 46, 1);
+}
+
+.header {
+    color: #fff;
+    text-decoration: none;
+}
+
+.navbar {
+    min-height: 40px;
+    font-size: 40px;
+    background: rgba(46, 46, 46, 1);
+
+}
+
+.navbar-brand {
+    padding: 110 15px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.nav-link {
+    font-size: 25px;
+    position: center;
+    text-align: center;
+}
+
+.navbar-toggle {
+    /* (80px - button height 34px) / 2 = 23px */
+    margin-top: 23px;
+    padding: 9px 10px !important;
+}
+
+@media (min-width: 768px) {
+    .navbar-nav>li>a {
+        /* (80px - line-height of 27px) / 2 = 26.5px */
+        padding-top: 26.5px;
+        padding-bottom: 26.5px;
+        line-height: 27px;
+    }
+}
+
+.mat-expansion-panel:hover {
+    background: rgba(46, 46, 46, 1);
+    color: #818181;
+    font-size: 25px;
+}
+
+.dropdown-menu {
+    background: rgb(41, 41, 41);
+}
+
+.dropdown-item {
+    color: white;
+    font-size: 20px;
+}
+
+.dropdown-item:hover {
+    background: dodgerblue;
+}
+
+::ng-deep .specific-class>.mat-expansion-indicator:after {
+    color: #818181;
+}
+
+::ng-deep .mat-expansion-panel-header-description,
+.mat-expansion-panel-header-title {
+    margin-left: 33%;
+}
