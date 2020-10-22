@@ -1,1 +1,41 @@
-@import '~bootstrap/dist/css/bootstrap.min.css';
+html,
+body {
+    height: 100%;
+    background: #E7EAEE;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+button {
+    margin: 5px;
+}
+
+.custom-css-class-success {
+    font-size: 20px;
+    background-color: #439b4b;
+}
+
+.custom-css-class-error {
+    background-color: #D55656;
+}
+
+.custom-css-class-error .mat-simple-snackbar {
+    font-size: 20px;
+}
+
+.custom-css-class-error .mat-simple-snackbar-action span {
+    color: white;
+    font-size: 25px;
+}
+
+.custom-css-class-success .mat-simple-snackbar {
+    font-size: 20px;
+}
+
+.custom-css-class-success .mat-simple-snackbar-action span {
+    color: white;
+    font-size: 25px;
+}

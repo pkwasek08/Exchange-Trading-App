@@ -1,0 +1,22 @@
+.element-row:hover {
+  background: whitesmoke;
+}
+
+.element-row {
+  cursor: pointer;
+}
+
+::ng-deep .ng-trigger-detailExpand {
+  margin-bottom: 7px;
+  box-shadow: 4px 4px 4px grey;
+}
+
+.mat-header-cell {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.mat-header-row {
+  box-shadow: 0 5px 5px -2px gray;
+  margin-bottom: 7px;
+}

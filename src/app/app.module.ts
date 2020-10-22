@@ -3,31 +3,65 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CompanieComponent } from './companie/companie.component';
+import { CompanieComponent } from './components/companie/companie.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MainPageComponent } from './main-page/main-page.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CommonModule } from '@angular/common';
+import {MatTableModule} from '@angular/material/table';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginComponent } from './Components/login/login.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import { RegistrationComponent } from './Components/registration/registration.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ProfileComponent } from './Components/profile/profile.component';
+
+const modulesLogin = [
+  MatButtonModule,
+  MatFormFieldModule,
+  MatInputModule
+];
+
 @NgModule({
   declarations: [
     AppComponent,
     CompanieComponent,
-    MainPageComponent
+    MainPageComponent,
+    LoginComponent,
+    RegistrationComponent,
+    ProfileComponent,
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
+    MatDialogModule,
+    modulesLogin,
+    MatDatepickerModule,
+    MatTableModule,
+    MatNativeDateModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSnackBarModule,
     BrowserModule,
     CommonModule,
+    MatExpansionModule,
+    BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
     BrowserModule,
-    AppRoutingModule,
-    HttpClientModule
+    AppRoutingModule
   ],
-  exports: [BsDropdownModule, TooltipModule, ModalModule],
+  exports: [BsDropdownModule, TooltipModule, ModalModule, modulesLogin],
   providers: [],
   bootstrap: [AppComponent]
 })

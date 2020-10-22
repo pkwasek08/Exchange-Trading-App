@@ -1,0 +1,86 @@
+<h1 mat-dialog-title style="font-size: 35px; font-family: Palantino; text-align: center;">Start creating your account
+</h1>
+<mat-dialog-content id="loginDialogId">
+    <form class="login-form" style="font-size: 20px;">
+        <table>
+            <tr>
+                <td>
+                    <mat-form-field>
+                        <mat-label>Name</mat-label>
+                        <input type="text" matInput [formControl]="nameFormControl" placeholder="Name">
+                        <mat-error *ngIf="nameFormControl.hasError('required')">
+                            Name is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field>
+                        <mat-label>Lastname</mat-label>
+                        <input type="text" matInput [formControl]="lastnameFormControl" placeholder="Lastname">
+                        <mat-error *ngIf="lastnameFormControl.hasError('required')">
+                            Lastname is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                <td>
+            </tr>
+            <tr>
+                <td>
+                    <mat-form-field>
+                        <mat-label>Birthday</mat-label>
+                        <input matInput [matDatepicker]="picker" [formControl]="birthdayFormControl"
+                            placeholder="Choose a date">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="birthdayFormControl.hasError('required')">
+                            Please enter a valid birthday
+                        </mat-error>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field style="margin-bottom: 20px;">
+                        <mat-label>Email</mat-label>
+                        <input matInput [formControl]="emailFormControl" placeholder="Email">
+                        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                            Please enter a valid email address
+                        </mat-error>
+                        <mat-error *ngIf="emailFormControl.hasError('required')">
+                            Email is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <mat-form-field>
+                        <mat-label>Login</mat-label>
+                        <input type="text" matInput [formControl]="loginFormControl" placeholder="Login">
+                        <mat-error *ngIf="loginFormControl.hasError('required')">
+                            Login is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </td>
+                <mat-form-field>
+                    <mat-label>Password</mat-label>
+                    <input type="password" matInput [formControl]="passwordFormControl" placeholder="password">
+                    <mat-error *ngIf="passwordFormControl.hasError('required')">
+                        Password is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- <td><img style="margin:10px;" src="assets/img/stock.jpg"></td>-->
+            <tr>
+                <td colspan="2">
+                    <div class="form-group" style="margin-top: 20px;">
+                        <button class="btn btn-secondary" style="margin-left: 25%;" (click)="close()">
+                            Cancel
+                        </button>
+                        <button [disabled]="!isValid()" class="btn btn-primary" (click)="login()" type="submit">
+                            Create
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+</mat-dialog-content>

@@ -1,0 +1,40 @@
+<h1 mat-dialog-title style="font-size: 35px; font-family: Palantino;">Welcome to Exchange Trader</h1>
+<mat-dialog-content id="loginDialogId">
+    <table>
+        <tr>
+            <td>
+                <form class="login-form" style="margin: 20px; font-size: 20px; width: 250px;">
+                    <mat-form-field style="margin-bottom: 20px;;">
+                      <mat-label>Email</mat-label>
+                      <input matInput [formControl]="emailFormControl" 
+                             placeholder="Email">
+                      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                        Please enter a valid email address
+                      </mat-error>
+                      <mat-error *ngIf="emailFormControl.hasError('required')">
+                        Email is <strong>required</strong>
+                      </mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Password</mat-label>
+                        <input type="password" matInput [formControl]="passwordFormControl" 
+                               placeholder="password">
+                        <mat-error *ngIf="passwordFormControl.hasError('required')">
+                          Password is <strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                    <div class="form-group" style="margin-top: 20px;">
+                        <button class="btn btn-secondary" style="margin-left: 15px;" (click)="close()">
+                            Cancel
+                        </button>
+                        <button [disabled]="!isValid()" class="btn btn-primary" (click)="login()" type="submit">
+                            Login
+                        </button>
+                    </div>
+                  </form>
+            </td>
+            <td><img style="margin:10px;" src="assets/img/developer.jpg"></td>
+        </tr>
+    </table>
+
+</mat-dialog-content>

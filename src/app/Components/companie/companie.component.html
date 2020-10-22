@@ -1,0 +1,37 @@
+<div class="example-container mat-elevation-z8">
+    <mat-table #table [dataSource]="dataSource" style="text-align: center;" multiTemplateDataRows>
+
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="industry">
+            <mat-header-cell *matHeaderCellDef> Industry </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.industry}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="revenue">
+            <mat-header-cell *matHeaderCellDef> Revenue </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.revenue}}PLN </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="capital">
+            <mat-header-cell *matHeaderCellDef> Capital </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.capital}}PLN </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+            <mat-cell *matCellDef="let detail">
+                <p>Details of listing of capital base</p>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row"
+            [class.expanded]="row.isExpanded" (click)="expandCollapse(row)"></mat-row>
+        <mat-row *matRowDef="let row; columns: ['expandedDetail'];"
+            [@detailExpand]="row.isExpanded == true ? 'expanded' : 'collapsed'" style="overflow: hidden">
+        </mat-row>
+    </mat-table>
+</div>

@@ -8,24 +8,46 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" (click)="closeNav()" style="font-family: Palatino" routerLink="/">Home</a>
+                <a class="nav-link" style="font-family: Palatino" routerLink="/companie">Companies</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" (click)="closeNav()" style="font-family: Palatino"
-                    routerLink="/companie">Companies</a>
+            <li class="nav-item" *ngIf="isLoggedUser()">
+                <a class="nav-link" style="font-family: Palatino; margin-left: 10px;" routerLink="/profile">Profile</a>
             </li>
         </ul>
     </div>
+    <ul class="navbar-nav" style="color: white" *ngIf="!isLoggedUser()">
+        <li class="nav-item">
+            <button type="button" style="padding: 5px;" class="btn btn-primary" data-toggle="modal"
+                data-target="#exampleModalCenter"> <a class="nav-link" (click)="openDialogLogin()"
+                    style="font-family: Palatino; color: white;">Log in</a>
+            </button>
+        </li>
+        <li class="nav-item">
+            <button type="button" style="padding: 5px;" class="btn btn-info" data-toggle="modal"
+                data-target="#exampleModalCenter"> <a class="nav-link" (click)="openDialogReg()"
+                    style="font-family: Palatino; color: white;">Sign up</a>
+            </button>
+        </li>
+    </ul>
+    <ul class="navbar-nav" style="color: white" *ngIf="isLoggedUser()">
+        <li class="nav-item">
+            <span style="font-family: Palatino; color: white;">{{getLoggedUser().name}}
+                {{getLoggedUser().lastname}}</span>
+        </li>
+    </ul>
 
     <nav id="mySidenav" class="sidenav">
         <ul class="list-unstyled component test">
             <li class="nav-item">
-                <a class="nav-link" (click)="closeNav()" style="font-family: Palatino" routerLink="/">Home <span
-                        class="sr-only">(current)</span></a>
+                <a class="nav-link" (click)="closeNav()" style="font-family: Palatino; margin-bottom: 10px;"
+                    routerLink="/">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" (click)="closeNav()" style="font-family: Palatino"
+                <a class="nav-link" (click)="closeNav()" style="font-family: Palatino; margin-bottom: 10px;"
                     routerLink="/companie">Companies</a>
+            </li>
+            <li class="nav-item" (click)="closeNav()" *ngIf="isLoggedUser()">
+                <a class="nav-link" style="font-family: Palatino;" routerLink="/profile">Profile</a>
             </li>
         </ul>
         <a href="javascript:void(0)" class="closebtn" style="font-family: Palatino" (click)="closeNav()">&times;</a>

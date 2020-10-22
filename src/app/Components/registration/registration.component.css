@@ -1,0 +1,24 @@
+.mat-form-field {
+    display: block;
+    margin: 10px;
+}
+
+textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+::ng-deep .mat-input-element {
+    color: black;
+}
+
+::ng-deep .mat-dialog-container {
+    border-radius: 6%;
+    border-style: solid;
+    background: #E7EAEE;
+    border-color: white;
+    color: black;
+}
+
+
+
