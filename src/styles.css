@@ -18,6 +18,15 @@ button {
     background-color: #439b4b;
 }
 
+.custom-css-class-success .mat-simple-snackbar {
+    font-size: 20px;
+}
+
+.custom-css-class-success .mat-simple-snackbar-action span {
+    color: white;
+    font-size: 25px;
+}
+
 .custom-css-class-error {
     background-color: #D55656;
 }
@@ -31,11 +40,15 @@ button {
     font-size: 25px;
 }
 
-.custom-css-class-success .mat-simple-snackbar {
+.custom-css-class-info {
+    background-color: #92a0ec;
+}
+
+.custom-css-class-info .mat-simple-snackbar {
     font-size: 20px;
 }
 
-.custom-css-class-success .mat-simple-snackbar-action span {
+.custom-css-class-info .mat-simple-snackbar-action span {
     color: white;
     font-size: 25px;
 }

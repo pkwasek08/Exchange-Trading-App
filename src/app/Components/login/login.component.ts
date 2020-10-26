@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { User } from '../../models/user';
 import { FormControl, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MainPageComponent } from 'src/app/main-page/main-page.component';
+import { RegistrationComponent } from '../registration/registration.component';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<LoginComponent>,
     private userService: UserService,
+    private dialog: MatDialog,
     private _snackBar: MatSnackBar) {
   }
 
@@ -77,4 +79,14 @@ export class LoginComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  onClickSignUp() {
+    setTimeout(() => {
+      this.close();
+    },
+      200);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    this.dialog.open(RegistrationComponent, dialogConfig);
+  }
 }

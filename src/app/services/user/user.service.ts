@@ -25,7 +25,6 @@ export class UserService {
   }
 
   public setLoggedUser(user: User) {
-    console.log("###@@@@@@@@@@@@@@@@@@ " + user);
     this.loggedUser = user;
   }
 

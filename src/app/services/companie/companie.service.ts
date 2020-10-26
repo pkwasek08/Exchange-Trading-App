@@ -7,11 +7,11 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class CompanieService {
-apuUrl = environment.apiUrl + 'companie';
+apiUrl = environment.apiUrl + 'companie';
 
   constructor(private _http: HttpClient) { }
 
   getCompanies(){
-    return this._http.get<Companie[]>(this.apuUrl);
+    return this._http.get<Companie[]>(this.apiUrl);
   }
 }

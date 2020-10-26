@@ -23,6 +23,7 @@
                           Password is <strong>required</strong>
                         </mat-error>
                     </mat-form-field>
+                    <i>If you don't have an accout, <a (click)=this.onClickSignUp() style="cursor: pointer; color: cornflowerblue; font-size: 18px;">cleak here</a></i>
                     <div class="form-group" style="margin-top: 20px;">
                         <button class="btn btn-secondary" style="margin-left: 15px;" (click)="close()">
                             Cancel
@@ -34,7 +35,6 @@
                   </form>
             </td>
             <td><img style="margin:10px;" src="assets/img/developer.jpg"></td>
-        </tr>
     </table>
 
 </mat-dialog-content>

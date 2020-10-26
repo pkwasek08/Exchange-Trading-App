@@ -1,37 +1,58 @@
 <div class="example-container mat-elevation-z8">
-    <mat-table #table [dataSource]="dataSource" style="text-align: center;" multiTemplateDataRows>
+    <mat-table #table [dataSource]="companiesData" style="text-align: center;" multiTemplateDataRows>
 
         <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+            <mat-cell *matCellDef="let element" style="font-size: 18px;"> {{element.name}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="industry">
             <mat-header-cell *matHeaderCellDef> Industry </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.industry}} </mat-cell>
+            <mat-cell *matCellDef="let element" style="font-size: 18px;"> {{element.industry}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="revenue">
             <mat-header-cell *matHeaderCellDef> Revenue </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.revenue}}PLN </mat-cell>
+            <mat-cell *matCellDef="let element" style="font-size: 18px;"> {{element.revenue}}PLN </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="capital">
             <mat-header-cell *matHeaderCellDef> Capital </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.capital}}PLN </mat-cell>
+            <mat-cell *matCellDef="let element" style="font-size: 18px;"> {{element.capital}}PLN </mat-cell>
         </ng-container>
-
-        <ng-container matColumnDef="expandedDetail">
-            <mat-cell *matCellDef="let detail">
-                <p>Details of listing of capital base</p>
+        <ng-container matColumnDef="companieStatisticLatest">
+            <mat-cell *matCellDef="let element">
+                    <table *ngIf="element.companieStatisticLatest != null">
+                        <tr>
+                            <td>
+                                <h3>Actual price: <b>{{element.companieStatisticLatest.price}}</b></h3>
+                            </td>
+                            <td>
+                                <h3>Maximum: <b>{{element.companieStatisticLatest.maxPrice}}</b></h3>
+                            </td>
+                            <td>
+                                <h3>Minimum: <b>{{element.companieStatisticLatest.minPrice}}</b></h3>
+                            </td>
+                            <td>
+                                <h3>Volume: <b>{{element.companieStatisticLatest.volume}}</b></h3>
+                            </td>
+                            <td>
+                                <h3>Trend Value <b>{{element.companieStatisticLatest.trendValue}}</b></h3>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-success" (click)="this.onClickSellBuy()">Sell/Buy</button>
+                            </td>
+                        </tr>
+                    </table>
             </mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row"
             [class.expanded]="row.isExpanded" (click)="expandCollapse(row)"></mat-row>
-        <mat-row *matRowDef="let row; columns: ['expandedDetail'];"
+        <mat-row *matRowDef="let row; columns: ['companieStatisticLatest'];"
             [@detailExpand]="row.isExpanded == true ? 'expanded' : 'collapsed'" style="overflow: hidden">
         </mat-row>
+        
     </mat-table>
 </div>

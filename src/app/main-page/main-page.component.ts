@@ -12,7 +12,7 @@ import { UserService } from '../services/user/user.service';
 })
 export class MainPageComponent implements OnInit {
   constructor(private dialog: MatDialog,
-    public userService: UserService) { }
+              public userService: UserService) { }
 
   ngOnInit(): void {
   }
