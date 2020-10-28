@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Companie } from '../../models/companie';
-import { CompanieService } from '../../services/companie/companie.service';
+import { CompanieService } from '../../services/company/companie.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { CompanieStatisticService } from 'src/app/services/companieStatistic/companie-statistic.service';
 import { UserService } from 'src/app/services/user/user.service';
@@ -53,10 +53,11 @@ export class CompanieComponent implements OnInit {
 
   isExpansionDetailRow = (i: number, row: Object) => row.hasOwnProperty('detailRow');
 
-  onClickSellBuy() {
+  onClickSellBuy(selectedCompanie: Companie) {
     if (this.userService.loggedUser == null) {
       this.openDialogLogin();
-    } else{
+    } else {
+      this.userService.selectedCompanie = selectedCompanie;
       this.router.navigateByUrl('/sell-buy');
     }
   }

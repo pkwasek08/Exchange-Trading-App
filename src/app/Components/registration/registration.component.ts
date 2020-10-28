@@ -66,7 +66,7 @@ export class RegistrationComponent implements OnInit {
           });
         },
         (error) => {
-          this._snackBar.open(error.status + " error", "x", {
+          this._snackBar.open(error.status + " error :(", "x", {
             panelClass: 'custom-css-class-error',
             duration: 5000,
           });

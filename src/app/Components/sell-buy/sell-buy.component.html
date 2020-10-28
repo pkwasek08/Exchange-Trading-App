@@ -1,1 +1,95 @@
-<p>sell-buy works!</p>
+<div style="display: flex;">
+    <div
+        style="margin-bottom: 20px; background: white;width: fit-content; padding: 40px; border-radius: 10px; margin-left: 10%; font-family: Palatino; text-align: center;">
+        <h1>{{company.name}}</h1>
+        <h2>{{company.industry}}</h2>
+        <h3>Revenue: {{company.revenue}}</h3>
+        <h3>Capital: {{company.capital}}</h3>
+    </div>
+    <div
+        style="margin-bottom: 20px; background: white;width: fit-content; padding: 40px; border-radius: 10px; margin-left: 50px; font-family: Palatino; text-align: center;">
+        <table>
+            <tr>
+                <h1>
+                    Order
+                </h1>
+            </tr>
+            <tr>
+                <button type="button" class="btn btn-secondary" id="sellBtn" (click)="onClickSellBtn()">Sell</button>
+                <button type="button" class="btn btn-secondary" id="buyBtn" (click)="onClickBuyBtn()">Buy</button>
+            </tr>
+            <tr style="display: inline-table;">
+                <input class="form-control" placeholder="Amout" style="width: 100px; margin:10px" min="0"
+                    [(ngModel)]="amountOrder" name="ewweqq" type="number" />
+            </tr>
+            <tr>
+                <h3>Price: <b>{{getPriceOrder()}}</b></h3>
+            </tr>
+            <tr>
+                <button style="width: 100%; height: 45px;" type="button" id="submitOrderId"
+                    class="btn btn-primary" (click) = "onClickSubmitBtn()" [disabled]="!isValidOrder()">Submit (select type)</button>
+            </tr>
+        </table>
+    </div>
+    <div
+        style="margin-bottom: 20px; background: white;width: fit-content; padding: 40px; border-radius: 10px; margin-left: 50px; font-family: Palatino; text-align: center;">
+        <table>
+            <tr>
+                <h1>
+                    Limit Order
+                </h1>
+            </tr>
+            <tr>
+                <button type="button" class="btn btn-secondary" id="sellLimitBtn"
+                    (click)="onClickSellLimitBtn()">Sell</button>
+                <button type="button" class="btn btn-secondary" id="buyLimitBtn"
+                    (click)="onClickBuyLimitBtn()">Buy</button>
+            </tr>
+            <tr style="display: flex;">
+                <input class="form-control" placeholder="Amout" style="width: 100px; margin:10px" min="0"
+                    [(ngModel)]="amountLimitOrder" type="number" />
+
+                <input class="form-control" placeholder="Limit" style="width: 100px; margin:10px" min="0"
+                    [(ngModel)]="limit" type="number" />
+            </tr>
+            <tr>
+                <h3>Price: <b>{{getPriceOrderLimit()}}</b></h3>
+            </tr>
+            <tr>
+                <button type="button" style="width: 100%; height: 45px;" (click)="onClickSubmitLimitBtn()" id="submitOrderLimitId"
+                    class="btn btn-primary" [disabled]="!isValidOrderLimit()">Submit (select type)</button>
+            </tr>
+        </table>
+    </div>
+    <div
+        style="margin-bottom: 20px; background: white;width: fit-content; padding: 40px; border-radius: 10px; margin-left: 50px; font-family: Palatino; text-align: center; display: table;">
+        <h1>Your deposit</h1>
+        <h2>{{loggedUser.deposit.cash}}PLN</h2>
+    </div>
+</div>
+
+<div style="text-align: center;">
+    <table class="table table-striped" style="background: white;">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Price</th>
+                <th scope="col">Max Price</th>
+                <th scope="col">min Price</th>
+                <th scope="col">Trend value</th>
+                <th scope="col">Volume</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let static of company.companieStatisticArray">
+                <th scope="row">{{static.id}}</th>
+                <td>{{static.price}}</td>
+                <td>{{static.maxPrice}}</td>
+                <td>{{static.minPrice}}</td>
+                <td>{{static.trendValue}}</td>
+                <td>{{static.volume}}</td>
+                <td>{{static.date | date:'longDate'}}</td>
+            </tr>
+    </table>
+    <div>
