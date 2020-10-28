@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Companie } from 'src/app/models/companie';
 import { User } from 'src/app/models/user';
 import { environment } from 'src/environments/environment';
-import { DepositService } from '../deposit/deposit.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +12,7 @@ export class UserService {
   selectedCompanie: Companie;
   apiUrl = environment.apiUrl + 'user';
 
-  constructor(private http: HttpClient,
-              private depositService: DepositService) {
+  constructor(private http: HttpClient) {
     this.loggedUser = null;
   }
 
@@ -30,16 +28,16 @@ export class UserService {
 
   public setLoggedUser(user: User) {
     this.loggedUser = user;
-    this.setDepositCash();
   }
 
   public isLoggedUser(): boolean {
     return (this.loggedUser != null);
   }
 
-  public setDepositCash() {
-    this.depositService.getCashDepositByUserId(this.loggedUser.id).subscribe(deposit => {
-      this.loggedUser.deposit = deposit;
+  public updateUserCash() {
+    this.http.get<User>(this.apiUrl + '/' + this.loggedUser.id).subscribe(user => {
+      this.loggedUser.cash = user.cash;
     });
+    return this.loggedUser;
   }
 }

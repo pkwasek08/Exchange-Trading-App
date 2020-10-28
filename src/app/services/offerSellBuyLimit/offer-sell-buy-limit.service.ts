@@ -14,4 +14,8 @@ export class OfferSellBuyLimitService {
   addOfferLimit(offer: OfferSellBuyLimit){
     return this.http.post(this.apiUrl, offer);
   }
+
+  getOffersLimitByUserId(userId: number){
+    //return this.http.post(this.apiUrl, userId);
+  }
 }

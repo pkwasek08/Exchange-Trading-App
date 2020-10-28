@@ -1,4 +1,3 @@
-import { Deposit } from './deposit';
 
 export class User {
     id: number;
@@ -9,7 +8,7 @@ export class User {
     email: string;
     login: string;
     password: string;
-    deposit: Deposit;
+    cash: number;
 
     constructor(id: number, name: string, lastname: string, birthday: Date, createdAt: Date,
                 email: string, login: string, password: string) {

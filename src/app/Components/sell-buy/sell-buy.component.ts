@@ -84,42 +84,46 @@ export class SellBuyComponent implements OnInit {
   }
 
   onClickSubmitBtn() {
-    const newOrder = new OfferSellBuy(null, this.amountOrder, this.getPriceOrder(), this.company, this.typeOrder);
+    const newOrder = new OfferSellBuy(null, this.amountOrder, this.getPriceOrder(), this.company,
+      this.loggedUser, this.typeOrder, new Date());
     this.offerSellBuyService.addOffer(newOrder)
-    .subscribe(
-      (response) => {
-        this._snackBar.open("Your order is completed", "x", {
-          panelClass: 'custom-css-class-success',
-          duration: 5000,
-        });
-      },
-      (error) => {
-        this._snackBar.open(error.status + " error :(", "x", {
-          panelClass: 'custom-css-class-error',
-          duration: 5000,
-        });
-      }
-    )
+      .subscribe(
+        (response) => {
+          this._snackBar.open("Your order is completed", "x", {
+            panelClass: 'custom-css-class-success',
+            duration: 5000,
+          });
+          this.updateUserCash();
+        },
+        (error) => {
+          this._snackBar.open(error.status + " error :(", "x", {
+            panelClass: 'custom-css-class-error',
+            duration: 5000,
+          });
+        }
+      )
+    console.log("$$$$$$ " + this.loggedUser.cash);
   }
 
   onClickSubmitLimitBtn() {
     const newOrderLimit = new OfferSellBuyLimit(null, this.amountLimitOrder, this.limit,
-      this.getPriceOrderLimit(), this.company, this.typeLimitOrder);
+      this.getPriceOrderLimit(), this.company, this.loggedUser, this.typeLimitOrder, new Date());
     this.offerSellBuyLimitService.addOfferLimit(newOrderLimit)
-    .subscribe(
-      (response) => {
-        this._snackBar.open("Your order has been accepted", "x", {
-          panelClass: 'custom-css-class-success',
-          duration: 5000,
-        });
-      },
-      (error) => {
-        this._snackBar.open(error.status + " error :(", "x", {
-          panelClass: 'custom-css-class-error',
-          duration: 5000,
-        });
-      }
-    )
+      .subscribe(
+        (response) => {
+          this._snackBar.open("Your order has been accepted", "x", {
+            panelClass: 'custom-css-class-success',
+            duration: 5000,
+          });
+          this.updateUserCash();
+        },
+        (error) => {
+          this._snackBar.open(error.status + " error :(", "x", {
+            panelClass: 'custom-css-class-error',
+            duration: 5000,
+          });
+        }
+      )
   }
 
   isValidOrder(): boolean {
@@ -138,5 +142,9 @@ export class SellBuyComponent implements OnInit {
     else {
       return false;
     }
+  }
+
+  updateUserCash() {
+    this.loggedUser = this.userService.updateUserCash();
   }
 }

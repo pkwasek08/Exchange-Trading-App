@@ -19,15 +19,17 @@
                 <button type="button" class="btn btn-secondary" id="buyBtn" (click)="onClickBuyBtn()">Buy</button>
             </tr>
             <tr style="display: inline-table;">
-                <input class="form-control" placeholder="Amout" style="width: 100px; margin:10px" min="0"
-                    [(ngModel)]="amountOrder" name="ewweqq" type="number" />
+                <mat-form-field  style="width: 100px; margin:5px">
+                    <input type="number" min="0" [(ngModel)]="amountOrder" matInput
+                        placeholder="Amout">
+                </mat-form-field>
             </tr>
             <tr>
                 <h3>Price: <b>{{getPriceOrder()}}</b></h3>
             </tr>
             <tr>
-                <button style="width: 100%; height: 45px;" type="button" id="submitOrderId"
-                    class="btn btn-primary" (click) = "onClickSubmitBtn()" [disabled]="!isValidOrder()">Submit (select type)</button>
+                <button style="width: 100%; height: 45px;" type="button" id="submitOrderId" class="btn btn-primary"
+                    (click)="onClickSubmitBtn()" [disabled]="!isValidOrder()">Submit (select type)</button>
             </tr>
         </table>
     </div>
@@ -46,25 +48,29 @@
                     (click)="onClickBuyLimitBtn()">Buy</button>
             </tr>
             <tr style="display: flex;">
-                <input class="form-control" placeholder="Amout" style="width: 100px; margin:10px" min="0"
-                    [(ngModel)]="amountLimitOrder" type="number" />
-
-                <input class="form-control" placeholder="Limit" style="width: 100px; margin:10px" min="0"
-                    [(ngModel)]="limit" type="number" />
+                <mat-form-field  style="width: 100px; margin:5px">
+                    <input type="number" min="0" [(ngModel)]="amountLimitOrder"
+                        matInput placeholder="Amout">
+                </mat-form-field>
+                <mat-form-field  style="width: 100px;margin:5px">
+                    <input type="number"  min="0" [(ngModel)]="limit" matInput
+                        placeholder="Limit">
+                </mat-form-field>
             </tr>
             <tr>
                 <h3>Price: <b>{{getPriceOrderLimit()}}</b></h3>
             </tr>
             <tr>
-                <button type="button" style="width: 100%; height: 45px;" (click)="onClickSubmitLimitBtn()" id="submitOrderLimitId"
-                    class="btn btn-primary" [disabled]="!isValidOrderLimit()">Submit (select type)</button>
+                <button type="button" style="width: 100%; height: 45px;" (click)="onClickSubmitLimitBtn()"
+                    id="submitOrderLimitId" class="btn btn-primary" [disabled]="!isValidOrderLimit()">Submit (select
+                    type)</button>
             </tr>
         </table>
     </div>
     <div
         style="margin-bottom: 20px; background: white;width: fit-content; padding: 40px; border-radius: 10px; margin-left: 50px; font-family: Palatino; text-align: center; display: table;">
         <h1>Your deposit</h1>
-        <h2>{{loggedUser.deposit.cash}}PLN</h2>
+        <h2>{{loggedUser.cash}}PLN</h2>
     </div>
 </div>
 
