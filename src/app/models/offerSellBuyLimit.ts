@@ -12,7 +12,8 @@ export class OfferSellBuyLimit{
     date: Date;
     active: boolean;
 
-    constructor(id: number, amount: number, limit: number, price: number, companie: Companie, user: User, type: string, date: Date) {
+    constructor(id: number, amount: number, limit: number, price: number, companie: Companie, user: User, type: string,
+                date: Date, active: boolean) {
         this.id = id;
         this.amount = amount;
         this.price = price;
@@ -21,5 +22,6 @@ export class OfferSellBuyLimit{
         this.user = user;
         this.type = type;
         this.date = date;
+        this.active = active;
     }
 }

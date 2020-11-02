@@ -53,6 +53,6 @@ export class MainPageComponent implements OnInit {
   }
 
   isLoggedAdmin(){
-    return this.userService.isLoggedUser() && this.userService.loggedUser.id === 0;
+    return this.userService.isLoggedUser() && this.userService.loggedUser.id === 1;
   }
 }

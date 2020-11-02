@@ -46,7 +46,7 @@ export class CompanieComponent implements OnInit {
     if (row.isExpanded) {
       row.isExpanded = false;
     } else {
-      this.getCompanieStatisticByDokumentId(row.id);
+      this.getCompanieStatisticByDokumentId(row.id - 1);
       row.isExpanded = true;
     }
   }

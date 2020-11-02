@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OfferSellBuyLimit } from 'src/app/models/offerSellBuyLimit';
+import { OfferTableView } from 'src/app/models/offerTableView';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -15,7 +16,13 @@ export class OfferSellBuyLimitService {
     return this.http.post(this.apiUrl, offer);
   }
 
-  getOffersLimitByUserId(userId: number){
-    //return this.http.post(this.apiUrl, userId);
+  getOffersBuyLimitByCompanieId(companieId: number) {
+    const params = new HttpParams().set('companieId', companieId.toString());
+    return this.http.get<OfferTableView[]>(this.apiUrl + '/buy/companie?' + params);
+  }
+
+  getOffersSellLimitByCompanieId(companieId: number) {
+    const params = new HttpParams().set('companieId', companieId.toString());
+    return this.http.get<OfferTableView[]>(this.apiUrl + '/sell/companie?' + params);
   }
 }

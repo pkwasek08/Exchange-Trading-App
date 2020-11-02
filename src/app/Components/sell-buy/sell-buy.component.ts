@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Companie } from 'src/app/models/companie';
 import { OfferSellBuy } from 'src/app/models/offerSellBuy';
 import { OfferSellBuyLimit } from 'src/app/models/offerSellBuyLimit';
+import { OfferTableView } from 'src/app/models/offerTableView';
 import { User } from 'src/app/models/user';
 import { CompanieStatisticService } from 'src/app/services/companieStatistic/companie-statistic.service';
 import { OfferSellBuyService } from 'src/app/services/offerSellBuy/offer-sell-buy.service';
@@ -20,9 +21,12 @@ export class SellBuyComponent implements OnInit {
   company: Companie;
   amountOrder = 0;
   amountLimitOrder = 0;
-  limit = 0;
+  priceLimit = 0;
   typeOrder: string;
   typeLimitOrder: string;
+  sellLimitOrder: OfferTableView[];
+  buyLimitOrder: OfferTableView[];
+  priceOrder = 0;
 
   constructor(private userService: UserService,
     private companieStatisticService: CompanieStatisticService,
@@ -35,16 +39,25 @@ export class SellBuyComponent implements OnInit {
     this.companieStatisticService.getCompanieStatisticByCompanieId(this.company.id).
       subscribe(companieStatisticList => this.company.companieStatisticArray = companieStatisticList);
     this.loggedUser = this.userService.loggedUser;
+    this.offerSellBuyLimitService.getOffersSellLimitByCompanieId(this.company.id).subscribe(order => this.sellLimitOrder = order);
+    this.offerSellBuyLimitService.getOffersBuyLimitByCompanieId(this.company.id).subscribe(order => this.buyLimitOrder = order);
   }
 
-  getPriceOrder() {
-    if (this.company.companieStatisticArray != null) {
-      return this.amountOrder * this.company.companieStatisticArray[0].price;
+  updatePriceOrder() {
+    if (this.typeOrder === 'Sell') {
+      if (this.buyLimitOrder.length !== 0) {
+        this.priceOrder = this.amountOrder * this.buyLimitOrder[0].price;
+      }
+    }
+    if (this.typeOrder === 'Buy') {
+      if (this.sellLimitOrder.length !== 0) {
+        this.priceOrder = this.amountOrder * this.sellLimitOrder[0].price;
+      }
     }
   }
 
   getPriceOrderLimit() {
-    return this.amountLimitOrder * this.limit;
+    return this.amountLimitOrder * this.priceLimit;
   }
 
   onClickSellBtn() {
@@ -54,6 +67,7 @@ export class SellBuyComponent implements OnInit {
     document.getElementById('buyBtn').style.background = '#6c757d';
     document.getElementById('submitOrderId').textContent = 'Submit sell order';
     this.typeOrder = 'Sell';
+    this.updatePriceOrder();
   }
 
   onClickBuyBtn() {
@@ -63,6 +77,7 @@ export class SellBuyComponent implements OnInit {
     document.getElementById('buyBtn').style.border = '6px solid #b9f3b4';
     document.getElementById('submitOrderId').textContent = 'Submit buy order';
     this.typeOrder = 'Buy';
+    this.updatePriceOrder();
   }
 
   onClickSellLimitBtn() {
@@ -84,7 +99,14 @@ export class SellBuyComponent implements OnInit {
   }
 
   onClickSubmitBtn() {
-    const newOrder = new OfferSellBuy(null, this.amountOrder, this.getPriceOrder(), this.company,
+    if(this.priceOrder === 0){
+      this._snackBar.open("No offers", "x", {
+        panelClass: 'custom-css-class-success',
+        duration: 5000,
+      });
+      return ;
+    }
+    const newOrder = new OfferSellBuy(null, this.amountOrder, this.priceOrder, this.company,
       this.loggedUser, this.typeOrder, new Date());
     this.offerSellBuyService.addOffer(newOrder)
       .subscribe(
@@ -93,7 +115,7 @@ export class SellBuyComponent implements OnInit {
             panelClass: 'custom-css-class-success',
             duration: 5000,
           });
-          this.updateUserCash();
+          this.updateData();
         },
         (error) => {
           this._snackBar.open(error.status + " error :(", "x", {
@@ -102,12 +124,11 @@ export class SellBuyComponent implements OnInit {
           });
         }
       )
-    console.log("$$$$$$ " + this.loggedUser.cash);
   }
 
   onClickSubmitLimitBtn() {
-    const newOrderLimit = new OfferSellBuyLimit(null, this.amountLimitOrder, this.limit,
-      this.getPriceOrderLimit(), this.company, this.loggedUser, this.typeLimitOrder, new Date());
+    const newOrderLimit = new OfferSellBuyLimit(null, this.amountLimitOrder, this.priceLimit,
+      this.priceLimit, this.company, this.loggedUser, this.typeLimitOrder, new Date(), true);
     this.offerSellBuyLimitService.addOfferLimit(newOrderLimit)
       .subscribe(
         (response) => {
@@ -115,7 +136,7 @@ export class SellBuyComponent implements OnInit {
             panelClass: 'custom-css-class-success',
             duration: 5000,
           });
-          this.updateUserCash();
+          this.updateData();
         },
         (error) => {
           this._snackBar.open(error.status + " error :(", "x", {
@@ -136,7 +157,7 @@ export class SellBuyComponent implements OnInit {
   }
 
   isValidOrderLimit(): boolean {
-    if (this.amountLimitOrder !== 0 && this.limit !== 0 && this.typeLimitOrder != null) {
+    if (this.amountLimitOrder !== 0 && this.priceLimit !== 0 && this.typeLimitOrder != null) {
       return true;
     }
     else {
@@ -146,5 +167,13 @@ export class SellBuyComponent implements OnInit {
 
   updateUserCash() {
     this.loggedUser = this.userService.updateUserCash();
+  }
+
+  updateData() {
+    this.loggedUser = this.userService.updateUserCash();
+    this.companieStatisticService.getCompanieStatisticByCompanieId(this.company.id).
+      subscribe(companieStatisticList => this.company.companieStatisticArray = companieStatisticList);
+    this.offerSellBuyLimitService.getOffersSellLimitByCompanieId(this.company.id).subscribe(order => this.sellLimitOrder = order);
+    this.offerSellBuyLimitService.getOffersBuyLimitByCompanieId(this.company.id).subscribe(order => this.buyLimitOrder = order);
   }
 }
