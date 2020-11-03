@@ -29,10 +29,10 @@ export class SellBuyComponent implements OnInit {
   priceOrder = 0;
 
   constructor(private userService: UserService,
-    private companieStatisticService: CompanieStatisticService,
-    private offerSellBuyService: OfferSellBuyService,
-    private offerSellBuyLimitService: OfferSellBuyLimitService,
-    private _snackBar: MatSnackBar) { }
+              private companieStatisticService: CompanieStatisticService,
+              private offerSellBuyService: OfferSellBuyService,
+              private offerSellBuyLimitService: OfferSellBuyLimitService,
+              private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.company = this.userService.selectedCompanie;

@@ -1,0 +1,53 @@
+<div
+    style="margin-right: 50px; margin-bottom: 20px; background: white; padding: 40px; border-radius: 10px;font-family: Palatino; margin-left: 50px; text-align: center;">
+    <div style="display: flex;">
+        <button type="button" (click)="onClickLimitOffers()" style="width: 200px;" id="offersLimitBtnId" class="btn btn-primary">Your limit offers</button>
+        <button type="button" style="width: 200px;" id="historyBtnId" (click)="onClickHistory()" class="btn btn-secondary">History</button>
+    </div>
+    <table id="limitOffersTabled" class="table table-striped" style="margin-left: 40px; margin: 10px;">
+        <thead>
+            <tr>
+                <th scope="col">Companie</th>
+                <th scope="col">Purchase</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Price</th>
+                <th scope="col">Type</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let offer of offersLimit">
+                <td>{{offer.companie.name}}</td>
+                <td *ngIf="offer.type == 'Sell'" style="color: #c52323; font-weight: bold;">{{getPurchase(offer.amount,offer.price)}}</td>
+                <td *ngIf="offer.type == 'Buy'" style="color: green; font-weight: bold;">{{getPurchase(offer.amount,offer.price)}}</td>
+                <td>{{offer.amount}}</td>
+                <td>{{offer.price}}</td>
+                <td *ngIf="offer.type == 'Sell'" style="color: #c52323; font-weight: bold;">{{offer.type}}</td>
+                <td *ngIf="offer.type == 'Buy'" style="color: green; font-weight: bold;">{{offer.type}}</td>
+                <td><button mat-flat-button color="warn" (click)="onClickRemove(offer.id)">x</button></td>
+            </tr>
+    </table>
+    <table id="offersTableId" class="table table-striped" style="margin-left: 40px; margin: 10px; display: none;">
+        <thead>
+            <tr>
+                <th scope="col">Companie</th>
+                <th scope="col">Purchase</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Price</th>
+                <th scope="col">Type</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let offer of offers">
+                <td>{{offer.companie.name}}</td>
+                <td *ngIf="offer.type == 'Sell'" style="color: #c52323; font-weight: bold;">{{getPurchase(offer.amount,offer.price)}}</td>
+                <td *ngIf="offer.type == 'Buy'" style="color: green; font-weight: bold;">{{getPurchase(offer.amount,offer.price)}}</td>
+                <td>{{offer.amount}}</td>
+                <td>{{offer.price}}</td>
+                <td *ngIf="offer.type == 'Sell'" style="color: #c52323; font-weight: bold;">{{offer.type}}</td>
+                <td *ngIf="offer.type == 'Buy'" style="color: green; font-weight: bold;">{{offer.type}}</td>
+                <td>{{offer.date | date:'shortDate'}}</td>
+            </tr>
+    </table>
+</div>

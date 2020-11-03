@@ -16,6 +16,11 @@ export class OfferSellBuyLimitService {
     return this.http.post(this.apiUrl, offer);
   }
 
+  removeOfferLimit(offerId: number){
+    return this.http.delete(this.apiUrl + '/' + offerId);
+  }
+
+
   getOffersBuyLimitByCompanieId(companieId: number) {
     const params = new HttpParams().set('companieId', companieId.toString());
     return this.http.get<OfferTableView[]>(this.apiUrl + '/buy/companie?' + params);
@@ -24,5 +29,10 @@ export class OfferSellBuyLimitService {
   getOffersSellLimitByCompanieId(companieId: number) {
     const params = new HttpParams().set('companieId', companieId.toString());
     return this.http.get<OfferTableView[]>(this.apiUrl + '/sell/companie?' + params);
+  }
+
+  getOffersLimitByUserId(userId: number) {
+    const params = new HttpParams().set('userId', userId.toString());
+    return this.http.get<OfferSellBuyLimit[]>(this.apiUrl + '/user?' + params);
   }
 }
