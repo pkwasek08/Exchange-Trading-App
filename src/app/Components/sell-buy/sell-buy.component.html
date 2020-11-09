@@ -1,11 +1,19 @@
 <div style="display: flex;">
     <div
         style="margin-bottom: 20px; background: white;width: fit-content; padding: 40px; border-radius: 10px; margin-left: 10px; font-family: Palatino; text-align: center;">
-        <h1>{{company.name}}</h1>
-        <h2>{{company.industry}}</h2>
-        <h3>Revenue: {{company.revenue}}</h3>
-        <h3>Capital: {{company.capital}}</h3>
-
+        <h2>{{company.name}}&nbsp;&nbsp;&nbsp;{{company.industry}}</h2>
+        <h3>Revenue: {{company.revenue}}&nbsp;&nbsp;&nbsp;Capital: {{company.capital}}</h3>
+        <div style="display: block;">
+            <canvas style="margin-bottom: 15px;" baseChart width="400" height="400"
+              [datasets]="lineChartData"
+              [labels]="lineChartLabels"
+              [options]="lineChartOptions"
+              [colors]="lineChartColors"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              [plugins]="lineChartPlugins">
+            </canvas>
+          </div>
         <table class="table table-striped" style="background: white;">
             <thead>
                 <tr>
@@ -28,7 +36,8 @@
                     <td>{{static.volume}}</td>
                     <td>{{static.date | date:'dd.MM.yyyy'}}</td>
                 </tr>
-        </table>
+        </table>        
+        <div id="chartContainer" style="height: 370px; width: 100%; margin-left:auto;margin-right:auto;"></div>
     </div>
     <div>
         <div style="display: flex;">
@@ -102,7 +111,7 @@
                 <h2 style="font-family: Palatino" *ngIf="stockUser != null">Actual value: </h2><h2 style="font-family: Palatino" *ngIf="stockUser != null">{{stockUserValue}} PLN</h2>
             </div>
         </div>
-        <div style="width: 100%; margin-right: 50px; display: flex; margin-bottom: 20px; background: white; padding: 40px; border-radius: 10px;font-family: Palatino; margin-left: 50px; text-align: center;">
+        <div style="width: 95%; margin-right: 50px; display: flex; margin-bottom: 20px; background: white; padding: 40px; border-radius: 10px;font-family: Palatino; margin-left: 50px; text-align: center;">
             <table class="table table-striped" style="width: 48%; margin-left: 40px; margin: 10px;">
                 <thead>
                     <tr>
@@ -144,3 +153,4 @@
         </div>
     </div>
 </div>
+

@@ -8,6 +8,7 @@
         <thead>
             <tr>
                 <th scope="col">Companie</th>
+                <th scope="col">Industry</th>
                 <th scope="col">Purchase</th>
                 <th scope="col">Amount</th>
                 <th scope="col">Price</th>
@@ -18,6 +19,7 @@
         <tbody>
             <tr *ngFor="let offer of offersLimit">
                 <td>{{offer.companie.name}}</td>
+                <td>{{offer.companie.industry}}</td>
                 <td *ngIf="offer.type == 'Sell'" style="color: #c52323; font-weight: bold;">{{getPurchase(offer.amount,offer.price)}}</td>
                 <td *ngIf="offer.type == 'Buy'" style="color: green; font-weight: bold;">{{getPurchase(offer.amount,offer.price)}}</td>
                 <td>{{offer.amount}}</td>

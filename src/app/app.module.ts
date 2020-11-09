@@ -26,6 +26,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ProfileComponent } from './Components/profile/profile.component';
 import { UserOrdersComponent } from './Components/user-orders/user-orders.component';
 import { SellBuyComponent } from './Components/sell-buy/sell-buy.component';
+import { ChartsModule } from 'ng2-charts';
 
 const modulesLogin = [
   MatButtonModule,
@@ -42,12 +43,13 @@ const modulesLogin = [
     RegistrationComponent,
     ProfileComponent,
     UserOrdersComponent,
-    SellBuyComponent,
+    SellBuyComponent
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
     MatDialogModule,
+    ChartsModule,
     modulesLogin,
     MatDatepickerModule,
     MatTableModule,

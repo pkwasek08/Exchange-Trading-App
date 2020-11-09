@@ -1,4 +1,4 @@
-import { Component, OnInit, ɵbypassSanitizationTrustResourceUrl } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Companie } from 'src/app/models/companie';
 import { OfferSellBuy } from 'src/app/models/offerSellBuy';
@@ -11,13 +11,33 @@ import { OfferSellBuyService } from 'src/app/services/offerSellBuy/offer-sell-bu
 import { OfferSellBuyLimitService } from 'src/app/services/offerSellBuyLimit/offer-sell-buy-limit.service';
 import { StockService } from 'src/app/services/stock/stock.service';
 import { UserService } from 'src/app/services/user/user.service';
-
+import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
+import { Color, Label } from 'ng2-charts';
 @Component({
   selector: 'app-sell-buy',
   templateUrl: './sell-buy.component.html',
   styleUrls: ['./sell-buy.component.css']
 })
 export class SellBuyComponent implements OnInit {
+
+  public lineChartData: ChartDataSets[] = [{ data: [], label: "Price" }];
+  public lineChartLabels: Label[] = [];
+  public lineChartOptions: ChartOptions = {
+    responsive: true,
+  };
+  public lineChartColors: Color[] = [
+    {
+      backgroundColor: 'rgba(148,159,177,0.2)',
+      borderColor: 'rgba(148,159,177,1)',
+      pointBackgroundColor: 'rgba(148,159,177,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+    },
+  ];
+  public lineChartLegend = true;
+  public lineChartType: ChartType = 'line';
+  public lineChartPlugins = [];
 
   loggedUser: User;
   company: Companie;
@@ -165,6 +185,10 @@ export class SellBuyComponent implements OnInit {
 
   onClickSubmitLimitBtn() {
     if (!this.validPriceOrderLimit()) {
+      this.snackBar.open('Order limit price must be higher than first offer price on the list.', 'x', {
+        panelClass: 'custom-css-class-warming',
+        duration: 3000,
+      });
       return;
     }
     if (!this.validateOffer(this.amountLimitOrder, this.priceLimit, this.typeLimitOrder)) {
@@ -192,7 +216,7 @@ export class SellBuyComponent implements OnInit {
   }
 
   isValidOrder() {
-    if (this.amountOrder !== 0 && this.typeOrder !== null && this.priceOrder !== 0) {
+    if (this.amountOrder !== 0 && this.typeOrder != null && this.priceOrder !== 0) {
       return true;
     }
     else {
@@ -203,7 +227,7 @@ export class SellBuyComponent implements OnInit {
   validPriceOrderLimit() {
     if (this.typeLimitOrder === 'Sell') {
       if (this.buyLimitOrder.length != 0 && this.buyLimitOrder[0].price >= this.priceLimit) {
-        this.snackBar.open('Order limit price must be higher than first offer price on the list.', 'x', {
+        this.snackBar.open('Order limit price must be lover than first offer price on the list.', 'x', {
           panelClass: 'custom-css-class-warming',
           duration: 3000,
         });
@@ -211,7 +235,7 @@ export class SellBuyComponent implements OnInit {
       }
     } else {
       if (this.sellLimitOrder.length != 0 && this.sellLimitOrder[0].price <= this.priceLimit) {
-        this.snackBar.open('Order limit price must be lover than first offer price on the list.', 'x', {
+        this.snackBar.open('Order limit price must be higher than first offer price on the list.', 'x', {
           panelClass: 'custom-css-class-warming',
           duration: 3000,
         });
@@ -222,7 +246,7 @@ export class SellBuyComponent implements OnInit {
   }
 
   isValidOrderLimit() {
-    if (this.amountLimitOrder !== 0 && this.priceLimit !== 0 && this.typeLimitOrder !== null) {
+    if (this.amountLimitOrder !== 0 && this.priceLimit !== 0 && this.typeLimitOrder != null) {
       return true;
     }
     return false;
@@ -235,7 +259,21 @@ export class SellBuyComponent implements OnInit {
   initData() {
     this.loggedUser = this.userService.updateUserCash();
     this.companieStatisticService.getCompanieStatisticByCompanieId(this.company.id).
-      subscribe(companieStatisticList => this.company.companieStatisticArray = companieStatisticList);
+      subscribe(companieStatisticList => {
+        this.company.companieStatisticArray = companieStatisticList;
+        let priceList: number[] = [];
+        this.lineChartLabels = [];
+        companieStatisticList.forEach(cs => {
+          priceList.unshift(cs.price);
+          const dateCompanieStatistic = new Date(cs.date);
+          const formattedDate = dateCompanieStatistic.getDate() + '/' + (dateCompanieStatistic.getMonth() + 1) + '/'
+           + dateCompanieStatistic.getFullYear()
+          this.lineChartLabels.unshift(formattedDate);
+        });
+        this.lineChartData = [
+          { data: priceList, label: 'Price' },
+        ];
+      });
     this.offerSellBuyLimitService.getOffersSellLimitByCompanieId(this.company.id).subscribe(order => this.sellLimitOrder = order);
     this.offerSellBuyLimitService.getOffersBuyLimitByCompanieId(this.company.id).subscribe(order => this.buyLimitOrder = order);
     this.stockService.getStockByUserIdAndCompanyId(this.loggedUser.id, this.company.id).subscribe(stock => {
@@ -244,6 +282,7 @@ export class SellBuyComponent implements OnInit {
         this.stockUserValue = this.getActualValueUserStock();
       }
     });
+
   }
 
   refreshOffersComponents() {

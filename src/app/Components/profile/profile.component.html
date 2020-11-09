@@ -1,9 +1,47 @@
-<div
-    style="background: white;width: fit-content; padding: 40px; border-radius: 10px; margin-left: 40%; font-family: Palatino; text-align: left;">
+<div style="display: flex;">
+    <div
+    style="margin-bottom: 20px; background: white;width: fit-content; padding: 40px; border-radius: 10px; margin-left: 10px; font-family: Palatino; text-align: center;">
     <h2>{{loggedUser.name}} {{loggedUser.lastname}}</h2>
-    <h3>Email: {{loggedUser.email}}</h3>
-    <h3>BirthDay: {{loggedUser.birthday | date:'longDate'}}</h3>
-    <h3>Active since: {{loggedUser.createdAt | date:'longDate'}}</h3>
-    <h3>Login: {{loggedUser.login}}</h3>
-    <h3>Password: {{loggedUser.password}}</h3>
+        <h3>Email: {{loggedUser.email}}</h3>
+        <h3>BirthDay: {{loggedUser.birthday | date:'longDate'}}</h3>
+        <h3>Active since: {{loggedUser.created_at | date:'longDate'}}</h3>
+        <h3>Login: {{loggedUser.login}}</h3>
+        <h3>Password: {{loggedUser.password}}</h3>
+        <h2>Money: <b>{{loggedUser.cash}}</b></h2>
+    </div>
+    <div
+    style="margin-bottom: 20px; background: white;width: fit-content; padding: 40px; border-radius: 10px; margin-left: 50px; font-family: Palatino; text-align: center;">
+    <h1>
+            Your Stocks
+        </h1>
+        <table id="stockUserTableId" class="table table-striped" style="width: 800px; margin-left: 40px; margin: 10px;">
+            <thead>
+                <tr>
+                    <th scope="col">Company</th>
+                    <th scope="col">Industry</th>
+                    <th scope="col">Trend %</th>
+                    <th scope="col">Actual Price</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Profit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let stock of stockUserList">
+                    <td>{{stock.companyName}}</td>
+                    <td>{{stock.industry}}</td>
+                    <td style="color: #c52323" *ngIf="0 > stock.trend">{{stock.trend}}</td>
+                    <td style="color: green;" *ngIf="stock.trend > 0">{{stock.trend}}</td>
+                    <td *ngIf="stock.trend == 0">{{stock.trend}}</td>
+                    <td>{{stock.actualPrice}}</td>
+                    <td>{{stock.amount}}</td>
+                    <td style="color: #c52323" *ngIf="0 > stock.profit">{{stock.profit}}</td>
+                    <td style="color: green;" *ngIf="stock.profit > 0">{{stock.profit}}</td>
+                    <td *ngIf="stock.profit == 0">{{stock.profit}}</td>                
+                </tr>
+            </tbody>
+            <tfoot>
+                <h3 style="margin-top: 15px;">Actual Value <b>{{getProfit()}}</b> PLN</h3>
+            </tfoot>
+        </table>
+    </div>
 </div>
