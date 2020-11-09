@@ -22,28 +22,40 @@
         </ng-container>
         <ng-container matColumnDef="companieStatisticLatest">
             <mat-cell *matCellDef="let element">
-                    <table *ngIf="element.companieStatisticLatest != null">
-                        <tr>
-                            <td>
-                                <h3>Actual price: <b>{{element.companieStatisticLatest.price}}</b></h3>
-                            </td>
-                            <td>
-                                <h3>Maximum: <b>{{element.companieStatisticLatest.maxPrice}}</b></h3>
-                            </td>
-                            <td>
-                                <h3>Minimum: <b>{{element.companieStatisticLatest.minPrice}}</b></h3>
-                            </td>
-                            <td>
-                                <h3>Volume: <b>{{element.companieStatisticLatest.volume}}</b></h3>
-                            </td>
-                            <td>
-                                <h3>Trend Value <b>{{element.companieStatisticLatest.trendValue}}</b></h3>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-success" (click)="this.onClickSellBuy(element)">Sell/Buy</button>
-                            </td>
-                        </tr>
-                    </table>
+                <table *ngIf="element.companieStatisticLatest != null && element.companieStatisticLatest.price != 0">
+                    <tr>
+                        <td>
+                            <h3>Actual price: <b>{{element.companieStatisticLatest.price}}</b></h3>
+                        </td>
+                        <td>
+                            <h3>Maximum: <b>{{element.companieStatisticLatest.maxPrice}}</b></h3>
+                        </td>
+                        <td>
+                            <h3>Minimum: <b>{{element.companieStatisticLatest.minPrice}}</b></h3>
+                        </td>
+                        <td>
+                            <h3>Volume: <b>{{element.companieStatisticLatest.volume}}</b></h3>
+                        </td>
+                        <td>
+                            <h3>Trend Value <b>{{element.companieStatisticLatest.trendValue}}</b></h3>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-success"
+                                (click)="this.onClickSellBuy(element)">Sell/Buy</button>
+                        </td>
+                    </tr>
+                </table>
+                <table *ngIf="element.companieStatisticLatest != null && element.companieStatisticLatest.price == 0">
+                    <tr>
+                        <td>
+                            <h3><b>New Stock !</b></h3>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-success"
+                            (click)="this.onClickSellBuy(element)">Sell/Buy</button>
+                        </td>
+                    </tr>
+                </table>
             </mat-cell>
         </ng-container>
 
@@ -53,6 +65,6 @@
         <mat-row *matRowDef="let row; columns: ['companieStatisticLatest'];"
             [@detailExpand]="row.isExpanded == true ? 'expanded' : 'collapsed'" style="overflow: hidden">
         </mat-row>
-        
+
     </mat-table>
 </div>

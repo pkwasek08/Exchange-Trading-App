@@ -33,7 +33,6 @@
                 <th scope="col">Companie</th>
                 <th scope="col">Purchase</th>
                 <th scope="col">Amount</th>
-                <th scope="col">Price</th>
                 <th scope="col">Type</th>
                 <th scope="col">Date</th>
             </tr>
@@ -41,10 +40,9 @@
         <tbody>
             <tr *ngFor="let offer of offers">
                 <td>{{offer.companie.name}}</td>
-                <td *ngIf="offer.type == 'Sell'" style="color: #c52323; font-weight: bold;">{{getPurchase(offer.amount,offer.price)}}</td>
-                <td *ngIf="offer.type == 'Buy'" style="color: green; font-weight: bold;">{{getPurchase(offer.amount,offer.price)}}</td>
+                <td *ngIf="offer.type == 'Sell'" style="color: #c52323; font-weight: bold;">{{offer.price}}</td>
+                <td *ngIf="offer.type == 'Buy'" style="color: green; font-weight: bold;">{{offer.price}}</td>
                 <td>{{offer.amount}}</td>
-                <td>{{offer.price}}</td>
                 <td *ngIf="offer.type == 'Sell'" style="color: #c52323; font-weight: bold;">{{offer.type}}</td>
                 <td *ngIf="offer.type == 'Buy'" style="color: green; font-weight: bold;">{{offer.type}}</td>
                 <td>{{offer.date | date:'shortDate'}}</td>

@@ -12,7 +12,7 @@
                     <th scope="col">Price</th>
                     <th scope="col">Max</th>
                     <th scope="col">Min</th>
-                    <th scope="col">Trend</th>
+                    <th scope="col">Trend %</th>
                     <th scope="col">Volume</th>
                     <th scope="col">Date</th>
                 </tr>
@@ -22,9 +22,11 @@
                     <td>{{static.price}}</td>
                     <td>{{static.maxPrice}}</td>
                     <td>{{static.minPrice}}</td>
-                    <td>{{static.trendValue}}</td>
+                    <td style="color: #c52323" *ngIf="0 > static.trendValue">{{static.trendValue}}</td>
+                    <td style="color: green;" *ngIf="static.trendValue > 0">{{static.trendValue}}</td>
+                    <td *ngIf="static.trendValue == 0">{{static.trendValue}}</td>
                     <td>{{static.volume}}</td>
-                    <td>{{static.date | date:'shortDate'}}</td>
+                    <td>{{static.date | date:'dd.MM.yyyy'}}</td>
                 </tr>
         </table>
     </div>
@@ -34,7 +36,7 @@
                 style="margin-bottom: 20px; height: max-content; background: white;width: fit-content; padding: 40px; border-radius: 10px; margin-left: 50px; font-family: Palatino; text-align: center;">
                 <table>
                     <tr>
-                        <h1 style="font-family: Palatino">
+                        <h1 style="font-family: Palatino; width: 180px;">
                             Order
                         </h1>
                     </tr>
@@ -45,7 +47,7 @@
                             (click)="onClickBuyBtn()">Buy</button>
                     </tr>
                     <tr style="display: inline-table;">
-                        <mat-form-field style="width: 100px; margin:5px">
+                        <mat-form-field style="width: 60px; margin:5px">
                             <input type="number" min="0" [(ngModel)]="amountOrder" (change)="updatePriceOrder()" matInput placeholder="Amout">
                         </mat-form-field>
                     </tr>
@@ -53,7 +55,7 @@
                         <h3 style="font-family: Palatino">Price: <b>{{priceOrder}}</b></h3>
                     </tr>
                     <tr>
-                        <button style="width: 100%; height: 45px;" type="button" id="submitOrderId"
+                        <button style="width: 100%;" type="button" id="submitOrderId"
                             class="btn btn-primary" (click)="onClickSubmitBtn()" [disabled]="!isValidOrder()">Submit
                             (select type)</button>
                     </tr>
@@ -63,7 +65,7 @@
                 style=" height: max-content; margin-bottom: 20px; background: white;width: fit-content; padding: 40px; border-radius: 10px; margin-left: 50px; font-family: Palatino; text-align: center;">
                 <table>
                     <tr>
-                        <h1 style="font-family: Palatino">
+                        <h1 style="font-family: Palatino; width: 180px;">
                             Limit Order
                         </h1>
                     </tr>
@@ -73,11 +75,11 @@
                         <button type="button" class="btn btn-secondary" id="buyLimitBtn"
                             (click)="onClickBuyLimitBtn()">Buy</button>
                     </tr>
-                    <tr style="display: flex;">
-                        <mat-form-field style="width: 100px; margin:5px">
+                    <tr>
+                        <mat-form-field style="width: 60px; margin:5px">
                             <input type="number" min="0" [(ngModel)]="amountLimitOrder" matInput placeholder="Amout">
                         </mat-form-field>
-                        <mat-form-field style="width: 100px;margin:5px">
+                        <mat-form-field style="width: 60px;margin:5px">
                             <input type="number" min="0" [(ngModel)]="priceLimit" matInput placeholder="Price">
                         </mat-form-field>
                     </tr>
@@ -85,7 +87,7 @@
                         <h3 style="font-family: Palatino">Price: <b>{{getPriceOrderLimit()}}</b></h3>
                     </tr>
                     <tr>
-                        <button type="button" style="width: 100%; height: 45px;" (click)="onClickSubmitLimitBtn()"
+                        <button type="button" style="width: 100%;" (click)="onClickSubmitLimitBtn()"
                             id="submitOrderLimitId" class="btn btn-primary" [disabled]="!isValidOrderLimit()">Submit
                             (select
                             type)</button>
@@ -95,7 +97,9 @@
             <div
                 style="margin-bottom: 20px; background: white;width: fit-content; padding: 40px; border-radius: 10px; margin-left: 50px; font-family: Palatino; text-align: center; display: table;">
                 <h1 style="font-family: Palatino">Your deposit</h1>
-                <h2 style="font-family: Palatino">{{loggedUser.cash}}PLN</h2>
+                <h2 style="font-family: Palatino">Money: {{loggedUser.cash}}PLN</h2>
+                <h2 style="font-family: Palatino" *ngIf="stockUser != null">Amount of stock: {{stockUser.amount}}</h2>
+                <h2 style="font-family: Palatino" *ngIf="stockUser != null">Actual value: </h2><h2 style="font-family: Palatino" *ngIf="stockUser != null">{{stockUserValue}} PLN</h2>
             </div>
         </div>
         <div style="width: 100%; margin-right: 50px; display: flex; margin-bottom: 20px; background: white; padding: 40px; border-radius: 10px;font-family: Palatino; margin-left: 50px; text-align: center;">
@@ -111,6 +115,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr *ngIf="sellLimitOrder == null || sellLimitOrder.length == 0"><td colspan="3">There are no stock</td></tr>
                     <tr *ngFor="let order of sellLimitOrder">
                         <td style="color: #c52323">{{order.purchase}}</td>
                         <td>{{order.amount}}</td>
@@ -129,6 +134,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr *ngIf="buyLimitOrder == null || buyLimitOrder.length == 0"><td colspan="3">There are no stock</td></tr>
                     <tr *ngFor="let order of buyLimitOrder">
                         <td style="color: green;">{{order.purchase}}</td>
                         <td>{{order.amount}}</td>

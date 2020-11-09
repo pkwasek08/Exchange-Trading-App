@@ -1,10 +1,8 @@
 <div
-    style="background: white;width: fit-content; padding: 40px; border-radius: 10px; margin-left: 40%; font-family: Palatino; text-align: center;">
-    <h1>Your accout</h1>
+    style="background: white;width: fit-content; padding: 40px; border-radius: 10px; margin-left: 40%; font-family: Palatino; text-align: left;">
     <h2>{{loggedUser.name}} {{loggedUser.lastname}}</h2>
     <h3>Email: {{loggedUser.email}}</h3>
     <h3>BirthDay: {{loggedUser.birthday | date:'longDate'}}</h3>
-    <h3>Email: {{loggedUser.email}}</h3>
     <h3>Active since: {{loggedUser.createdAt | date:'longDate'}}</h3>
     <h3>Login: {{loggedUser.login}}</h3>
     <h3>Password: {{loggedUser.password}}</h3>

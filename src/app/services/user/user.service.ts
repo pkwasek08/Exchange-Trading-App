@@ -1,18 +1,22 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Companie } from 'src/app/models/companie';
+import { Stock } from 'src/app/models/stock';
 import { User } from 'src/app/models/user';
 import { environment } from 'src/environments/environment';
+import { StockService } from '../stock/stock.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   loggedUser: User;
+  loggerUserStockList: Stock[];
   selectedCompanie: Companie;
   apiUrl = environment.apiUrl + 'user';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private stockService: StockService) {
     this.loggedUser = null;
   }
 
@@ -28,6 +32,7 @@ export class UserService {
 
   public setLoggedUser(user: User) {
     this.loggedUser = user;
+    this.stockService.getStockByUserId(this.loggedUser.id).subscribe(stockList => this.loggerUserStockList = stockList);
   }
 
   public isLoggedUser(): boolean {
