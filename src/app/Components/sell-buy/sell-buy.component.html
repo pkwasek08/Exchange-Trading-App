@@ -4,7 +4,7 @@
         <h2>{{company.name}}&nbsp;&nbsp;&nbsp;{{company.industry}}</h2>
         <h3>Revenue: {{company.revenue}}&nbsp;&nbsp;&nbsp;Capital: {{company.capital}}</h3>
         <div style="display: block;">
-            <canvas style="margin-bottom: 15px;" baseChart width="400" height="400"
+            <canvas style="margin-bottom: 10px;" baseChart width="400" height="400"
               [datasets]="lineChartData"
               [labels]="lineChartLabels"
               [options]="lineChartOptions"
@@ -14,6 +14,18 @@
               [plugins]="lineChartPlugins">
             </canvas>
           </div>
+          <div style="display: block;">
+            <canvas baseChart style="margin-bottom: 15px;" width="400"
+              [datasets]="barChartData"
+              [labels]="lineChartLabels"
+              [options]="barChartOptions"
+              [plugins]="barChartPlugins"
+              [colors]="barChartColors"
+              [legend]="barChartLegend"
+              [chartType]="barChartType">
+            </canvas>
+          </div>
+          
         <table class="table table-striped" style="background: white;">
             <thead>
                 <tr>
@@ -61,7 +73,7 @@
                         </mat-form-field>
                     </tr>
                     <tr>
-                        <h3 style="font-family: Palatino">Price: <b>{{priceOrder}}</b></h3>
+                        <h3 style="font-family: Palatino">Total: <b>{{priceOrder}}</b></h3>
                     </tr>
                     <tr>
                         <button style="width: 100%;" type="button" id="submitOrderId"
@@ -93,7 +105,7 @@
                         </mat-form-field>
                     </tr>
                     <tr>
-                        <h3 style="font-family: Palatino">Price: <b>{{getPriceOrderLimit()}}</b></h3>
+                        <h3 style="font-family: Palatino">Total: <b>{{getPriceOrderLimit()}}</b></h3>
                     </tr>
                     <tr>
                         <button type="button" style="width: 100%;" (click)="onClickSubmitLimitBtn()"
@@ -107,7 +119,7 @@
                 style="margin-bottom: 20px; background: white;width: fit-content; padding: 40px; border-radius: 10px; margin-left: 50px; font-family: Palatino; text-align: center; display: table;">
                 <h1 style="font-family: Palatino">Your deposit</h1>
                 <h2 style="font-family: Palatino">Money: {{loggedUser.cash}}PLN</h2>
-                <h2 style="font-family: Palatino" *ngIf="stockUser != null">Amount of stock: {{stockUser.amount}}</h2>
+                <h2 style="font-family: Palatino" *ngIf="stockUser != null">Stock: {{stockUser.amount}}</h2>
                 <h2 style="font-family: Palatino" *ngIf="stockUser != null">Actual value: </h2><h2 style="font-family: Palatino" *ngIf="stockUser != null">{{stockUserValue}} PLN</h2>
             </div>
         </div>
@@ -118,7 +130,7 @@
                         <th colspan="3" style="font-size: 18px; color: #c52323; background: #e9d7d7;">Sell</th>
                     </tr>
                     <tr>
-                        <th scope="col">Purchase</th>
+                        <th scope="col">Total</th>
                         <th scope="col">Amount</th>
                         <th scope="col">Price</th>
                     </tr>
@@ -137,7 +149,7 @@
                         <th colspan="3" style="font-size: 18px; color: green; background: #c3facc;">Buy</th>
                     </tr>
                     <tr>
-                        <th scope="col">Purchase</th>
+                        <th scope="col">Total</th>
                         <th scope="col">Amount</th>
                         <th scope="col">Price</th>
                     </tr>

@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.loggedUser = this.userService.loggedUser;
+    this.loggedUser = this.userService.getUser();
     this.stockService.getStockByUserIdTableView(this.loggedUser.id).subscribe(stockList => this.stockUserList = stockList);
   }
 

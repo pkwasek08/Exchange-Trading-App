@@ -1,23 +1,21 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Companie } from 'src/app/models/companie';
-import { Stock } from 'src/app/models/stock';
 import { User } from 'src/app/models/user';
 import { environment } from 'src/environments/environment';
-import { StockService } from '../stock/stock.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  loggedUser: User;
-  loggerUserStockList: Stock[];
-  selectedCompanie: Companie;
   apiUrl = environment.apiUrl + 'user';
 
-  constructor(private http: HttpClient,
-              private stockService: StockService) {
-    this.loggedUser = null;
+  constructor(private http: HttpClient) {
+  }
+
+  public getUser(): User {
+    const localStorageItem = JSON.parse(localStorage.getItem('user'));
+    return localStorageItem === null ? null : localStorageItem.user;
   }
 
   public doRegistration(user: User) {
@@ -31,18 +29,31 @@ export class UserService {
   }
 
   public setLoggedUser(user: User) {
-    this.loggedUser = user;
-    this.stockService.getStockByUserId(this.loggedUser.id).subscribe(stockList => this.loggerUserStockList = stockList);
+    this.setUser(user);
   }
 
   public isLoggedUser(): boolean {
-    return (this.loggedUser != null);
+    return (this.getUser() != null);
   }
 
   public updateUserCash() {
-    this.http.get<User>(this.apiUrl + '/' + this.loggedUser.id).subscribe(user => {
-      this.loggedUser.cash = user.cash;
+    this.http.get<User>(this.apiUrl + '/' + this.getUser().id).subscribe(user => {
+      this.setUser(user);
     });
-    return this.loggedUser;
+    return this.getUser();
   }
+
+  public setUser(user: User): void {
+    localStorage.setItem('user', JSON.stringify({ user: user }));
+  }
+
+  public getSelectedCompany(){
+    const localStorageItem = JSON.parse(localStorage.getItem('selectedCompany'));
+    return localStorageItem === null ? null : localStorageItem.selectedCompany;
+  }
+
+  public setSelectedCompany(selectedCompany: Companie){
+    localStorage.setItem('selectedCompany', JSON.stringify({ selectedCompany: selectedCompany }));
+  }
+
 }

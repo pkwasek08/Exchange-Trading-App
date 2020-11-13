@@ -65,6 +65,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (data) => {
           this.user = data;
+          this.userService.setUser(this.user);
         },
         (error) => {
           this._snackBar.open(error.status + ' error :(', 'x', {

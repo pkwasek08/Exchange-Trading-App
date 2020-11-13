@@ -53,11 +53,11 @@ export class CompanieComponent implements OnInit {
 
   isExpansionDetailRow = (i: number, row: Object) => row.hasOwnProperty('detailRow');
 
-  onClickSellBuy(selectedCompanie: Companie) {
-    if (this.userService.loggedUser == null) {
+  onClickSellBuy(selectedCompany: Companie) {
+    if (this.userService.getUser() == null) {
       this.openDialogLogin();
     } else {
-      this.userService.selectedCompanie = selectedCompanie;
+      this.userService.setSelectedCompany(selectedCompany);
       this.router.navigateByUrl('/sell-buy');
     }
   }

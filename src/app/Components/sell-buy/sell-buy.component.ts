@@ -39,6 +39,28 @@ export class SellBuyComponent implements OnInit {
   public lineChartType: ChartType = 'line';
   public lineChartPlugins = [];
 
+
+  public barChartOptions: ChartOptions = {
+    responsive: true,
+  };
+  public barChartColors: Color[] = [
+    {
+      backgroundColor: 'rgba(103, 190, 249,0.8)',
+      borderColor: 'rgba(103, 190, 249,1)',
+      pointBackgroundColor: 'rgba(103, 190, 249,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(103, 190, 249,0.8)'
+    },
+  ];
+  public barChartType: ChartType = 'bar';
+  public barChartLegend = true;
+  public barChartPlugins = [];
+
+  public barChartData: ChartDataSets[] = [
+    { data: [], label: 'Volume' }];
+
+
   loggedUser: User;
   company: Companie;
   amountOrder = 0;
@@ -60,8 +82,8 @@ export class SellBuyComponent implements OnInit {
     private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.company = this.userService.selectedCompanie;
-    this.loggedUser = this.userService.loggedUser;
+    this.company = this.userService.getSelectedCompany();
+    this.loggedUser = this.userService.getUser();
     this.initData();
   }
 
@@ -85,7 +107,7 @@ export class SellBuyComponent implements OnInit {
 
   validateOffer(amount: number, price: number, type: string) {
     if (type === 'Buy') {
-      if (this.loggedUser.cash == null || (this.loggedUser.cash != null && amount * price > this.loggedUser.cash)) {
+      if (this.loggedUser.cash == null || (this.loggedUser.cash !== null && price > this.loggedUser.cash)) {
         this.snackBar.open('You don\'t have enough money to accept this transaction', 'x', {
           panelClass: 'custom-css-class-warming',
           duration: 3000,
@@ -216,7 +238,7 @@ export class SellBuyComponent implements OnInit {
   }
 
   isValidOrder() {
-    if (this.amountOrder !== 0 && this.typeOrder != null && this.priceOrder !== 0) {
+    if (this.amountOrder !== 0 && this.typeOrder !== null && this.priceOrder !== 0) {
       return true;
     }
     else {
@@ -246,7 +268,7 @@ export class SellBuyComponent implements OnInit {
   }
 
   isValidOrderLimit() {
-    if (this.amountLimitOrder !== 0 && this.priceLimit !== 0 && this.typeLimitOrder != null) {
+    if (this.amountLimitOrder !== 0 && this.priceLimit !== 0 && this.typeLimitOrder !== null) {
       return true;
     }
     return false;
@@ -262,16 +284,21 @@ export class SellBuyComponent implements OnInit {
       subscribe(companieStatisticList => {
         this.company.companieStatisticArray = companieStatisticList;
         let priceList: number[] = [];
+        let volumeList: number[] = [];
         this.lineChartLabels = [];
         companieStatisticList.forEach(cs => {
           priceList.unshift(cs.price);
+          volumeList.unshift(cs.volume);
           const dateCompanieStatistic = new Date(cs.date);
           const formattedDate = dateCompanieStatistic.getDate() + '/' + (dateCompanieStatistic.getMonth() + 1) + '/'
            + dateCompanieStatistic.getFullYear()
           this.lineChartLabels.unshift(formattedDate);
         });
         this.lineChartData = [
-          { data: priceList, label: 'Price' },
+          { data: priceList, label: 'Price' }
+        ];
+        this.barChartData = [
+          { data: volumeList, label: 'Volume' }
         ];
       });
     this.offerSellBuyLimitService.getOffersSellLimitByCompanieId(this.company.id).subscribe(order => this.sellLimitOrder = order);
@@ -298,8 +325,8 @@ export class SellBuyComponent implements OnInit {
     this.amountLimitOrder = 0;
     this.priceLimit = 0;
     this.priceOrder = 0;
-    this.typeOrder = '';
-    this.typeLimitOrder = '';
+    this.typeOrder = null;
+    this.typeLimitOrder = null;
     document.getElementById('submitOrderLimitId').textContent = 'Submit (select type)';
     document.getElementById('submitOrderId').textContent = 'Submit (select type)';
   }
@@ -322,7 +349,7 @@ export class SellBuyComponent implements OnInit {
       let valueStockUser = 0;
       let amountStock = amount;
       for (const order of limitOrderList) {
-        if (order.amount >= amount) {
+        if (order.amount >= amountStock) {
           valueStockUser += amountStock * order.price;
           amountStock = 0;
           break;

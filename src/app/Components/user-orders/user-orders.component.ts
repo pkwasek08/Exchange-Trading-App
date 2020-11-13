@@ -23,7 +23,7 @@ export class UserOrdersComponent implements OnInit {
               private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
-    this.loggedUser = this.userService.loggedUser;
+    this.loggedUser = this.userService.getUser();
     this.offerSellBuyLimitService.getOffersLimitByUserId(this.loggedUser.id).subscribe(offersLimitList => {
       this.offersLimit = offersLimitList;
     });

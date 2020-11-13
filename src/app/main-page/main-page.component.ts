@@ -49,6 +49,6 @@ export class MainPageComponent implements OnInit {
   }
 
   getLoggedUser(): User {
-    return this.userService.loggedUser;
+    return this.userService.getUser();
   }
 }
