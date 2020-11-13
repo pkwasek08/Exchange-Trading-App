@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit {
   getProfit() {
     let profit = 0;
     if (this.stockUserList != null) {
-      this.stockUserList.forEach(stock => profit += stock.purchase);
+      this.stockUserList.forEach(stock => profit += stock.actualPrice);
     }
     return profit;
   }

@@ -56,4 +56,8 @@ export class UserService {
     localStorage.setItem('selectedCompany', JSON.stringify({ selectedCompany: selectedCompany }));
   }
 
+  public signOutUser(){
+    localStorage.removeItem('user');
+  }
+
 }

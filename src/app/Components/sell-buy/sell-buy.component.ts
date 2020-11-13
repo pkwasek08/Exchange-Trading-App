@@ -207,10 +207,6 @@ export class SellBuyComponent implements OnInit {
 
   onClickSubmitLimitBtn() {
     if (!this.validPriceOrderLimit()) {
-      this.snackBar.open('Order limit price must be higher than first offer price on the list.', 'x', {
-        panelClass: 'custom-css-class-warming',
-        duration: 3000,
-      });
       return;
     }
     if (!this.validateOffer(this.amountLimitOrder, this.priceLimit, this.typeLimitOrder)) {
@@ -249,7 +245,7 @@ export class SellBuyComponent implements OnInit {
   validPriceOrderLimit() {
     if (this.typeLimitOrder === 'Sell') {
       if (this.buyLimitOrder.length != 0 && this.buyLimitOrder[0].price >= this.priceLimit) {
-        this.snackBar.open('Order limit price must be lover than first offer price on the list.', 'x', {
+        this.snackBar.open('Order limit price must be higher than first offer price on the buy list.', 'x', {
           panelClass: 'custom-css-class-warming',
           duration: 3000,
         });
@@ -257,7 +253,7 @@ export class SellBuyComponent implements OnInit {
       }
     } else {
       if (this.sellLimitOrder.length != 0 && this.sellLimitOrder[0].price <= this.priceLimit) {
-        this.snackBar.open('Order limit price must be higher than first offer price on the list.', 'x', {
+        this.snackBar.open('Order limit price must be lesser than first offer price on the sell list.', 'x', {
           panelClass: 'custom-css-class-warming',
           duration: 3000,
         });
