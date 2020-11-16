@@ -27,6 +27,7 @@ import { ProfileComponent } from './Components/profile/profile.component';
 import { UserOrdersComponent } from './Components/user-orders/user-orders.component';
 import { SellBuyComponent } from './Components/sell-buy/sell-buy.component';
 import { ChartsModule } from 'ng2-charts';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 const modulesLogin = [
   MatButtonModule,
@@ -49,6 +50,7 @@ const modulesLogin = [
     HttpClientModule,
     BrowserModule,
     MatDialogModule,
+    MatPaginatorModule,
     ChartsModule,
     modulesLogin,
     MatDatepickerModule,

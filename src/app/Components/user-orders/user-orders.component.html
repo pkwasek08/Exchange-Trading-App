@@ -1,8 +1,10 @@
 <div
     style="margin-right: 50px; margin-bottom: 20px; background: white; padding: 40px; border-radius: 10px;font-family: Palatino; margin-left: 50px; text-align: center;">
     <div style="display: flex;">
-        <button type="button" (click)="onClickLimitOffers()" style="width: 200px;" id="offersLimitBtnId" class="btn btn-primary">Your limit offers</button>
-        <button type="button" style="width: 200px;" id="historyBtnId" (click)="onClickHistory()" class="btn btn-secondary">History</button>
+        <button type="button" (click)="onClickLimitOffers()" style="width: 200px;" id="offersLimitBtnId"
+            class="btn btn-primary">Your limit offers</button>
+        <button type="button" style="width: 200px;" id="historyBtnId" (click)="onClickHistory()"
+            class="btn btn-secondary">History</button>
     </div>
     <table id="limitOffersTabled" class="table table-striped" style="margin-left: 40px; margin: 10px;">
         <thead>
@@ -20,8 +22,10 @@
             <tr *ngFor="let offer of offersLimit">
                 <td>{{offer.companie.name}}</td>
                 <td>{{offer.companie.industry}}</td>
-                <td *ngIf="offer.type == 'Sell'" style="color: #c52323; font-weight: bold;">{{getPurchase(offer.amount,offer.price)}}</td>
-                <td *ngIf="offer.type == 'Buy'" style="color: green; font-weight: bold;">{{getPurchase(offer.amount,offer.price)}}</td>
+                <td *ngIf="offer.type == 'Sell'" style="color: #c52323; font-weight: bold;">
+                    {{getPurchase(offer.amount,offer.price)}}</td>
+                <td *ngIf="offer.type == 'Buy'" style="color: green; font-weight: bold;">
+                    {{getPurchase(offer.amount,offer.price)}}</td>
                 <td>{{offer.amount}}</td>
                 <td>{{offer.price}}</td>
                 <td *ngIf="offer.type == 'Sell'" style="color: #c52323; font-weight: bold;">{{offer.type}}</td>
@@ -49,5 +53,13 @@
                 <td *ngIf="offer.type == 'Buy'" style="color: green; font-weight: bold;">{{offer.type}}</td>
                 <td>{{offer.date | date:'shortDate'}}</td>
             </tr>
+        </tbody>
+        <td colspan="5">
+            <mat-paginator id="offerHistoryPaginatorId" [length]="offerHistoryPageNumber"
+                [pageSize]=" offerHistoryPageSize" [pageSizeOptions]="pageSizeOptions"
+                [pageIndex]=" offerHistoryPageIndex" [showFirstLastButtons]="true"
+                (page)="pageEvent = setHistoryOfferPage($event)">
+            </mat-paginator>
+        </td>
     </table>
 </div>

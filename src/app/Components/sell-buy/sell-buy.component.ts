@@ -13,6 +13,7 @@ import { StockService } from 'src/app/services/stock/stock.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
+import { PageEvent } from '@angular/material/paginator';
 @Component({
   selector: 'app-sell-buy',
   templateUrl: './sell-buy.component.html',
@@ -73,7 +74,11 @@ export class SellBuyComponent implements OnInit {
   priceOrder = 0;
   stockUser: Stock;
   stockUserValue = 0;
-
+  companieStatisticPageSize = 10;
+  companieStatisticPageIndex = 0;
+  companieStatisticPageNumber = 0;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageEvent: PageEvent;
   constructor(private userService: UserService,
     private companieStatisticService: CompanieStatisticService,
     private offerSellBuyService: OfferSellBuyService,
@@ -274,20 +279,49 @@ export class SellBuyComponent implements OnInit {
     this.loggedUser = this.userService.updateUserCash();
   }
 
-  initData() {
-    this.loggedUser = this.userService.updateUserCash();
-    this.companieStatisticService.getCompanieStatisticByCompanieId(this.company.id).
-      subscribe(companieStatisticList => {
-        this.company.companieStatisticArray = companieStatisticList;
+  setCompanieStatisticListPage(event?: PageEvent) {
+    this.companieStatisticService.getCompanieStatisticPageByCompanieId(this.company.id, event.pageIndex,
+      event.pageSize).subscribe(page => {
+        this.company.companieStatisticArray = page['content'];
+        this.companieStatisticPageNumber = page['totalElements'];
+        this.companieStatisticPageIndex = page['number'];
+        this.companieStatisticPageSize = page['size'];
         let priceList: number[] = [];
         let volumeList: number[] = [];
         this.lineChartLabels = [];
-        companieStatisticList.forEach(cs => {
+        page['content'].forEach(cs => {
           priceList.unshift(cs.price);
           volumeList.unshift(cs.volume);
           const dateCompanieStatistic = new Date(cs.date);
           const formattedDate = dateCompanieStatistic.getDate() + '/' + (dateCompanieStatistic.getMonth() + 1) + '/'
-           + dateCompanieStatistic.getFullYear()
+            + dateCompanieStatistic.getFullYear()
+          this.lineChartLabels.unshift(formattedDate);
+        });
+        this.lineChartData = [
+          { data: priceList, label: 'Price' }
+        ];
+        this.barChartData = [
+          { data: volumeList, label: 'Volume' }
+        ];
+      });
+    return event;
+  }
+
+  initData() {
+    this.loggedUser = this.userService.updateUserCash();
+    this.companieStatisticService.getCompanieStatisticPageByCompanieId(this.company.id, 0, this.companieStatisticPageSize).
+      subscribe(companieStatisticList => {
+        this.company.companieStatisticArray = companieStatisticList['content'];
+        this.companieStatisticPageNumber = companieStatisticList['totalElements'];
+        let priceList: number[] = [];
+        let volumeList: number[] = [];
+        this.lineChartLabels = [];
+        companieStatisticList['content'].forEach(cs => {
+          priceList.unshift(cs.price);
+          volumeList.unshift(cs.volume);
+          const dateCompanieStatistic = new Date(cs.date);
+          const formattedDate = dateCompanieStatistic.getDate() + '/' + (dateCompanieStatistic.getMonth() + 1) + '/'
+            + dateCompanieStatistic.getFullYear()
           this.lineChartLabels.unshift(formattedDate);
         });
         this.lineChartData = [

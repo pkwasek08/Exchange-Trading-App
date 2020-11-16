@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { OfferSellBuy } from 'src/app/models/offerSellBuy';
 import { OfferSellBuyLimit } from 'src/app/models/offerSellBuyLimit';
@@ -16,19 +17,25 @@ export class UserOrdersComponent implements OnInit {
   offers: OfferSellBuy[];
   offersLimit: OfferSellBuyLimit[];
   loggedUser: User;
+  offerHistoryPageSize = 10;
+  offerHistoryPageIndex = 0;
+  offerHistoryPageNumber = 0;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageEvent: PageEvent;
 
   constructor(private offerSellBuyService: OfferSellBuyService,
-              private offerSellBuyLimitService: OfferSellBuyLimitService,
-              private userService: UserService,
-              private _snackBar: MatSnackBar) { }
+    private offerSellBuyLimitService: OfferSellBuyLimitService,
+    private userService: UserService,
+    private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.loggedUser = this.userService.getUser();
     this.offerSellBuyLimitService.getOffersLimitByUserId(this.loggedUser.id).subscribe(offersLimitList => {
       this.offersLimit = offersLimitList;
     });
-    this.offerSellBuyService.getOffersByUserId(this.loggedUser.id).subscribe(offersList => {
-      this.offers = offersList;
+    this.offerSellBuyService.getOffersByUserId(this.loggedUser.id, 0, this.offerHistoryPageSize).subscribe(offersList => {
+      this.offerHistoryPageNumber = offersList['totalElements'];
+      this.offers = offersList['content'];
     });
   }
 
@@ -70,4 +77,14 @@ export class UserOrdersComponent implements OnInit {
     );
   }
 
+  setHistoryOfferPage(event?: PageEvent) {
+    this.offerSellBuyService.getOffersByUserId(this.loggedUser.id, event.pageIndex, event.pageSize)
+      .subscribe(page => {
+        this.offers = page['content'];
+        this.offerHistoryPageNumber = page['totalElements'];
+        this.offerHistoryPageIndex = page['number'];
+        this.offerHistoryPageSize = page['size'];
+      });
+    return event;
+  }
 }

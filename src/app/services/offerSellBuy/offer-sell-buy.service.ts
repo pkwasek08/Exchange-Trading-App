@@ -11,12 +11,14 @@ export class OfferSellBuyService {
 
   constructor(private http: HttpClient) { }
 
-  addOffer(offer: OfferSellBuy){
+  addOffer(offer: OfferSellBuy) {
     return this.http.post(this.apiUrl, offer);
   }
 
-  getOffersByUserId(userId: number){
-    const params = new HttpParams().set('userId', userId.toString());
-    return this.http.get<OfferSellBuy[]>(this.apiUrl + '/user?' + params);
+  getOffersByUserId(userId: number, page: number, size: number) {
+    const params = new HttpParams().set('userId', userId.toString())
+      .set('page', page.toString())
+      .set('size', size.toString());
+    return this.http.get<OfferSellBuy[]>(this.apiUrl + '/user/paginator?' + params);
   }
 }

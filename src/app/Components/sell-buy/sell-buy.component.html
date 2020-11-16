@@ -48,7 +48,14 @@
                     <td>{{static.volume}}</td>
                     <td>{{static.date | date:'dd.MM.yyyy'}}</td>
                 </tr>
-        </table>        
+        </table>   
+        <mat-paginator [length]="companieStatisticPageNumber"
+               [pageSize]="companieStatisticPageSize"
+               [pageSizeOptions]="pageSizeOptions"
+               [pageIndex]="companieStatisticPageIndex"
+               [showFirstLastButtons] = "true"
+               (page)="pageEvent = setCompanieStatisticListPage($event)">
+        </mat-paginator>     
         <div id="chartContainer" style="height: 370px; width: 100%; margin-left:auto;margin-right:auto;"></div>
     </div>
     <div>

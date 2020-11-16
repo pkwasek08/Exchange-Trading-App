@@ -18,6 +18,13 @@ export class CompanieStatisticService {
     return this.http.get<CompanieStatistic[]>(this.apiUrl + '/companie?' + params);
   }
 
+  getCompanieStatisticPageByCompanieId(companieId: number, page: number, size: number) {
+    const params = new HttpParams().set('companieId', companieId.toString())
+      .set('page', page.toString())
+      .set('size', size.toString());
+    return this.http.get<CompanieStatistic[]>(this.apiUrl + '/companie/paginator?' + params);
+  }
+
   getCompanieStatisticLatestByCompanieId(companieId: number) {
     const params = new HttpParams().set('companieId', companieId.toString());
     return this.http.get<CompanieStatistic>(this.apiUrl + '/companie/latest?' + params);
