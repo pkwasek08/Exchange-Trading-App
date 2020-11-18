@@ -24,9 +24,9 @@ export class UserOrdersComponent implements OnInit {
   pageEvent: PageEvent;
 
   constructor(private offerSellBuyService: OfferSellBuyService,
-    private offerSellBuyLimitService: OfferSellBuyLimitService,
-    private userService: UserService,
-    private _snackBar: MatSnackBar) { }
+              private offerSellBuyLimitService: OfferSellBuyLimitService,
+              private userService: UserService,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.loggedUser = this.userService.getUser();
@@ -60,7 +60,7 @@ export class UserOrdersComponent implements OnInit {
   onClickRemove(offerLimitId: number) {
     this.offerSellBuyLimitService.removeOfferLimit(offerLimitId).subscribe(
       (response) => {
-        this._snackBar.open("The offer has been removed", "x", {
+        this.snackBar.open("The offer has been removed", "x", {
           panelClass: 'custom-css-class-success',
           duration: 5000,
         });
@@ -69,7 +69,7 @@ export class UserOrdersComponent implements OnInit {
         });
       },
       (error) => {
-        this._snackBar.open(error.status + " error :(", "x", {
+        this.snackBar.open(error.status + " error :(", "x", {
           panelClass: 'custom-css-class-error',
           duration: 5000,
         });

@@ -17,7 +17,7 @@ export class StockService {
     return this.http.get<Stock[]>(this.apiUrl + '/user?' + params);
   }
 
-  getStockByUserIdTableView(userId: number){    
+  getStockByUserIdTableView(userId: number){
     const params = new HttpParams().set('userId', userId.toString());
     return this.http.get<StockUserTableView[]>(this.apiUrl + '/view/user?' + params);
   }

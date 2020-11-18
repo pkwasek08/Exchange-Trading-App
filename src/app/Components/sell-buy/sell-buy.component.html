@@ -38,7 +38,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let static of company.companieStatisticArray">
+                <tr *ngFor="let static of company.companyStatisticArray">
                     <td>{{static.price}}</td>
                     <td>{{static.maxPrice}}</td>
                     <td>{{static.minPrice}}</td>
@@ -49,12 +49,12 @@
                     <td>{{static.date | date:'dd.MM.yyyy'}}</td>
                 </tr>
         </table>   
-        <mat-paginator [length]="companieStatisticPageNumber"
-               [pageSize]="companieStatisticPageSize"
+        <mat-paginator [length]="companyStatisticPageNumber"
+               [pageSize]="companyStatisticPageSize"
                [pageSizeOptions]="pageSizeOptions"
-               [pageIndex]="companieStatisticPageIndex"
+               [pageIndex]="companyStatisticPageIndex"
                [showFirstLastButtons] = "true"
-               (page)="pageEvent = setCompanieStatisticListPage($event)">
+               (page)="pageEvent = setCompanyStatisticListPage($event)">
         </mat-paginator>     
         <div id="chartContainer" style="height: 370px; width: 100%; margin-left:auto;margin-right:auto;"></div>
     </div>

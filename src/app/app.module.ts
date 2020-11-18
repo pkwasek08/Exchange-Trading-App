@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CompanieComponent } from './Components/companie/companie.component';
+import { CompanyComponent } from './Components/company/company.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MainPageComponent } from './main-page/main-page.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
@@ -38,7 +38,7 @@ const modulesLogin = [
 @NgModule({
   declarations: [
     AppComponent,
-    CompanieComponent,
+    CompanyComponent,
     MainPageComponent,
     LoginComponent,
     RegistrationComponent,

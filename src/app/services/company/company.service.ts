@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Companie } from '../../models/companie';
+import { Company } from '../../models/company';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CompanieService {
-apiUrl = environment.apiUrl + 'companie';
+export class CompanyService {
+apiUrl = environment.apiUrl + 'company';
 
-  constructor(private _http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   getCompanies(){
-    return this._http.get<Companie[]>(this.apiUrl);
+    return this.http.get<Company[]>(this.apiUrl);
   }
 }

@@ -21,14 +21,14 @@ export class OfferSellBuyLimitService {
   }
 
 
-  getOffersBuyLimitByCompanieId(companieId: number) {
-    const params = new HttpParams().set('companieId', companieId.toString());
-    return this.http.get<OfferTableView[]>(this.apiUrl + '/buy/companie?' + params);
+  getOffersBuyLimitByCompanyId(companyId: number) {
+    const params = new HttpParams().set('companyId', companyId.toString());
+    return this.http.get<OfferTableView[]>(this.apiUrl + '/buy/company?' + params);
   }
 
-  getOffersSellLimitByCompanieId(companieId: number) {
-    const params = new HttpParams().set('companieId', companieId.toString());
-    return this.http.get<OfferTableView[]>(this.apiUrl + '/sell/companie?' + params);
+  getOffersSellLimitByCompanyId(companyId: number) {
+    const params = new HttpParams().set('companyId', companyId.toString());
+    return this.http.get<OfferTableView[]>(this.apiUrl + '/sell/company?' + params);
   }
 
   getOffersLimitByUserId(userId: number) {

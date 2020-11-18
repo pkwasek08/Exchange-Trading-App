@@ -9,7 +9,7 @@
     <table id="limitOffersTabled" class="table table-striped" style="margin-left: 40px; margin: 10px;">
         <thead>
             <tr>
-                <th scope="col">Companie</th>
+                <th scope="col">Company</th>
                 <th scope="col">Industry</th>
                 <th scope="col">Purchase</th>
                 <th scope="col">Amount</th>
@@ -20,8 +20,8 @@
         </thead>
         <tbody>
             <tr *ngFor="let offer of offersLimit">
-                <td>{{offer.companie.name}}</td>
-                <td>{{offer.companie.industry}}</td>
+                <td>{{offer.company.name}}</td>
+                <td>{{offer.company.industry}}</td>
                 <td *ngIf="offer.type == 'Sell'" style="color: #c52323; font-weight: bold;">
                     {{getPurchase(offer.amount,offer.price)}}</td>
                 <td *ngIf="offer.type == 'Buy'" style="color: green; font-weight: bold;">
@@ -36,7 +36,7 @@
     <table id="offersTableId" class="table table-striped" style="margin-left: 40px; margin: 10px; display: none;">
         <thead>
             <tr>
-                <th scope="col">Companie</th>
+                <th scope="col">Company</th>
                 <th scope="col">Purchase</th>
                 <th scope="col">Amount</th>
                 <th scope="col">Type</th>
@@ -45,7 +45,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let offer of offers">
-                <td>{{offer.companie.name}}</td>
+                <td>{{offer.company.name}}</td>
                 <td *ngIf="offer.type == 'Sell'" style="color: #c52323; font-weight: bold;">{{offer.price}}</td>
                 <td *ngIf="offer.type == 'Buy'" style="color: green; font-weight: bold;">{{offer.price}}</td>
                 <td>{{offer.amount}}</td>

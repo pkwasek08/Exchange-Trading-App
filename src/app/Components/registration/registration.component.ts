@@ -43,7 +43,7 @@ export class RegistrationComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<RegistrationComponent>,
     private userService: UserService,
-    private _snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -60,13 +60,13 @@ export class RegistrationComponent implements OnInit {
     this.userService.doRegistration(this.user)
       .subscribe(
         (response) => {
-          this._snackBar.open("Successed registration", "x", {
+          this.snackBar.open("Successed registration", "x", {
             panelClass: 'custom-css-class-success',
             duration: 5000,
           });
         },
         (error) => {
-          this._snackBar.open(error.status + " error :(", "x", {
+          this.snackBar.open(error.status + " error :(", "x", {
             panelClass: 'custom-css-class-error',
             duration: 5000,
           });
@@ -76,7 +76,7 @@ export class RegistrationComponent implements OnInit {
 
 
   openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
+    this.snackBar.open(message, action, {
       duration: 3000,
     });
   }

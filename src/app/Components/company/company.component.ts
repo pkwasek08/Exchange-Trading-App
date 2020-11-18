@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Companie } from '../../models/companie';
-import { CompanieService } from '../../services/company/companie.service';
+import { Company } from '../../models/company';
+import { CompanyService } from '../../services/company/company.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { CompanieStatisticService } from 'src/app/services/companieStatistic/companie-statistic.service';
+import { CompanyStatisticService } from 'src/app/services/companyStatistic/company-statistic.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LoginComponent } from '../login/login.component';
@@ -10,9 +10,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-companie',
-  templateUrl: './companie.component.html',
-  styleUrls: ['./companie.component.css'],
+  selector: 'app-company',
+  templateUrl: './company.component.html',
+  styleUrls: ['./company.component.css'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0' })),
@@ -21,39 +21,39 @@ import { Router } from '@angular/router';
     ]),
   ],
 })
-export class CompanieComponent implements OnInit {
+export class CompanyComponent implements OnInit {
   panelOpenState = false;
-  companiesData: Companie[];
+  companiesData: Company[];
   displayedColumns = ['name', 'industry', 'revenue', 'capital'];
-  dataSource = this.companieService.getCompanies();
-  constructor(private companieService: CompanieService,
-              private companieStatisticService: CompanieStatisticService,
+  dataSource = this.companyService.getCompanies();
+  constructor(private companyService: CompanyService,
+              private companyStatisticService: CompanyStatisticService,
               private dialog: MatDialog,
               private snackBar: MatSnackBar,
               private userService: UserService,
               private router: Router) { }
   ngOnInit() {
-    return this.companieService.getCompanies()
-      .subscribe(companie => { this.companiesData = companie });
+    return this.companyService.getCompanies()
+      .subscribe(company => { this.companiesData = company });
   }
 
-  getCompanieStatisticByDokumentId(rowId: number) {
-    this.companieStatisticService.getCompanieStatisticLatestByCompanieId(this.companiesData[rowId].id).subscribe(companieStatistic =>
-      this.companiesData[rowId].companieStatisticLatest = companieStatistic);
+  getCompanyStatisticByDokumentId(rowId: number) {
+    this.companyStatisticService.getCompanyStatisticLatestByCompanyId(this.companiesData[rowId].id).subscribe(companyStatistic =>
+      this.companiesData[rowId].companyStatisticLatest = companyStatistic);
   }
 
   expandCollapse(row) {
     if (row.isExpanded) {
       row.isExpanded = false;
     } else {
-      this.getCompanieStatisticByDokumentId(row.id - 1);
+      this.getCompanyStatisticByDokumentId(row.id - 1);
       row.isExpanded = true;
     }
   }
 
   isExpansionDetailRow = (i: number, row: Object) => row.hasOwnProperty('detailRow');
 
-  onClickSellBuy(selectedCompany: Companie) {
+  onClickSellBuy(selectedCompany: Company) {
     if (this.userService.getUser() == null) {
       this.openDialogLogin();
     } else {

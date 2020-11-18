@@ -1,4 +1,4 @@
-export class CompanieStatistic {
+export class CompanyStatistic {
     id: number;
     price: number;
     date: Date;

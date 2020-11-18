@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     private dialogRef: MatDialogRef<LoginComponent>,
     private userService: UserService,
     private dialog: MatDialog,
-    private _snackBar: MatSnackBar) {
+    private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -44,14 +44,14 @@ export class LoginComponent implements OnInit {
     this.doLogin();
     setTimeout(() => {
       if (this.user != null) {
-        this._snackBar.open('Successed log in', 'x', {
+        this.snackBar.open('Successed log in', 'x', {
           panelClass: 'custom-css-class-success',
           duration: 5000,
         });
         this.userService.setLoggedUser(this.user);
         this.dialogRef.close();
       } else {
-        this._snackBar.open('Incorrect email or password', 'x', {
+        this.snackBar.open('Incorrect email or password', 'x', {
           panelClass: 'custom-css-class-error',
           duration: 5000,
         });
@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit {
           this.userService.setUser(this.user);
         },
         (error) => {
-          this._snackBar.open(error.status + ' error :(', 'x', {
+          this.snackBar.open(error.status + ' error :(', 'x', {
             panelClass: 'custom-css-class-error',
             duration: 5000,
           });

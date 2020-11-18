@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Companie } from 'src/app/models/companie';
+import { Company } from 'src/app/models/company';
 import { OfferSellBuy } from 'src/app/models/offerSellBuy';
 import { OfferSellBuyLimit } from 'src/app/models/offerSellBuyLimit';
 import { OfferTableView } from 'src/app/models/offerTableView';
 import { Stock } from 'src/app/models/stock';
 import { User } from 'src/app/models/user';
-import { CompanieStatisticService } from 'src/app/services/companieStatistic/companie-statistic.service';
+import { CompanyStatisticService } from 'src/app/services/companyStatistic/company-statistic.service';
 import { OfferSellBuyService } from 'src/app/services/offerSellBuy/offer-sell-buy.service';
 import { OfferSellBuyLimitService } from 'src/app/services/offerSellBuyLimit/offer-sell-buy-limit.service';
 import { StockService } from 'src/app/services/stock/stock.service';
@@ -63,7 +63,7 @@ export class SellBuyComponent implements OnInit {
 
 
   loggedUser: User;
-  company: Companie;
+  company: Company;
   amountOrder = 0;
   amountLimitOrder = 0;
   priceLimit = 0;
@@ -74,17 +74,17 @@ export class SellBuyComponent implements OnInit {
   priceOrder = 0;
   stockUser: Stock;
   stockUserValue = 0;
-  companieStatisticPageSize = 10;
-  companieStatisticPageIndex = 0;
-  companieStatisticPageNumber = 0;
+  companyStatisticPageSize = 10;
+  companyStatisticPageIndex = 0;
+  companyStatisticPageNumber = 0;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
   constructor(private userService: UserService,
-    private companieStatisticService: CompanieStatisticService,
-    private offerSellBuyService: OfferSellBuyService,
-    private offerSellBuyLimitService: OfferSellBuyLimitService,
-    private stockService: StockService,
-    private snackBar: MatSnackBar) { }
+              private companyStatisticService: CompanyStatisticService,
+              private offerSellBuyService: OfferSellBuyService,
+              private offerSellBuyLimitService: OfferSellBuyLimitService,
+              private stockService: StockService,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.company = this.userService.getSelectedCompany();
@@ -279,22 +279,22 @@ export class SellBuyComponent implements OnInit {
     this.loggedUser = this.userService.updateUserCash();
   }
 
-  setCompanieStatisticListPage(event?: PageEvent) {
-    this.companieStatisticService.getCompanieStatisticPageByCompanieId(this.company.id, event.pageIndex,
+  setCompanyStatisticListPage(event?: PageEvent) {
+    this.companyStatisticService.getCompanyStatisticPageByCompanyId(this.company.id, event.pageIndex,
       event.pageSize).subscribe(page => {
-        this.company.companieStatisticArray = page['content'];
-        this.companieStatisticPageNumber = page['totalElements'];
-        this.companieStatisticPageIndex = page['number'];
-        this.companieStatisticPageSize = page['size'];
+        this.company.companyStatisticArray = page['content'];
+        this.companyStatisticPageNumber = page['totalElements'];
+        this.companyStatisticPageIndex = page['number'];
+        this.companyStatisticPageSize = page['size'];
         let priceList: number[] = [];
         let volumeList: number[] = [];
         this.lineChartLabels = [];
         page['content'].forEach(cs => {
           priceList.unshift(cs.price);
           volumeList.unshift(cs.volume);
-          const dateCompanieStatistic = new Date(cs.date);
-          const formattedDate = dateCompanieStatistic.getDate() + '/' + (dateCompanieStatistic.getMonth() + 1) + '/'
-            + dateCompanieStatistic.getFullYear()
+          const dateCompanyStatistic = new Date(cs.date);
+          const formattedDate = dateCompanyStatistic.getDate() + '/' + (dateCompanyStatistic.getMonth() + 1) + '/'
+            + dateCompanyStatistic.getFullYear()
           this.lineChartLabels.unshift(formattedDate);
         });
         this.lineChartData = [
@@ -309,19 +309,19 @@ export class SellBuyComponent implements OnInit {
 
   initData() {
     this.loggedUser = this.userService.updateUserCash();
-    this.companieStatisticService.getCompanieStatisticPageByCompanieId(this.company.id, 0, this.companieStatisticPageSize).
-      subscribe(companieStatisticList => {
-        this.company.companieStatisticArray = companieStatisticList['content'];
-        this.companieStatisticPageNumber = companieStatisticList['totalElements'];
+    this.companyStatisticService.getCompanyStatisticPageByCompanyId(this.company.id, 0, this.companyStatisticPageSize).
+      subscribe(companyStatisticList => {
+        this.company.companyStatisticArray = companyStatisticList['content'];
+        this.companyStatisticPageNumber = companyStatisticList['totalElements'];
         let priceList: number[] = [];
         let volumeList: number[] = [];
         this.lineChartLabels = [];
-        companieStatisticList['content'].forEach(cs => {
+        companyStatisticList['content'].forEach(cs => {
           priceList.unshift(cs.price);
           volumeList.unshift(cs.volume);
-          const dateCompanieStatistic = new Date(cs.date);
-          const formattedDate = dateCompanieStatistic.getDate() + '/' + (dateCompanieStatistic.getMonth() + 1) + '/'
-            + dateCompanieStatistic.getFullYear()
+          const dateCompanyStatistic = new Date(cs.date);
+          const formattedDate = dateCompanyStatistic.getDate() + '/' + (dateCompanyStatistic.getMonth() + 1) + '/'
+            + dateCompanyStatistic.getFullYear()
           this.lineChartLabels.unshift(formattedDate);
         });
         this.lineChartData = [
@@ -331,8 +331,8 @@ export class SellBuyComponent implements OnInit {
           { data: volumeList, label: 'Volume' }
         ];
       });
-    this.offerSellBuyLimitService.getOffersSellLimitByCompanieId(this.company.id).subscribe(order => this.sellLimitOrder = order);
-    this.offerSellBuyLimitService.getOffersBuyLimitByCompanieId(this.company.id).subscribe(order => this.buyLimitOrder = order);
+    this.offerSellBuyLimitService.getOffersSellLimitByCompanyId(this.company.id).subscribe(order => this.sellLimitOrder = order);
+    this.offerSellBuyLimitService.getOffersBuyLimitByCompanyId(this.company.id).subscribe(order => this.buyLimitOrder = order);
     this.stockService.getStockByUserIdAndCompanyId(this.loggedUser.id, this.company.id).subscribe(stock => {
       if (stock != null) {
         this.stockUser = stock;

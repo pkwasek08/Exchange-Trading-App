@@ -20,24 +20,24 @@
             <mat-header-cell *matHeaderCellDef> Capital </mat-header-cell>
             <mat-cell *matCellDef="let element" style="font-size: 18px;"> {{element.capital}}PLN </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="companieStatisticLatest">
+        <ng-container matColumnDef="companyStatisticLatest">
             <mat-cell *matCellDef="let element">
-                <table *ngIf="element.companieStatisticLatest != null && element.companieStatisticLatest.price != 0">
+                <table *ngIf="element.companyStatisticLatest != null && element.companyStatisticLatest.price != 0">
                     <tr>
                         <td>
-                            <h3>Actual price: <b>{{element.companieStatisticLatest.price}}</b></h3>
+                            <h3>Actual price: <b>{{element.companyStatisticLatest.price}}</b></h3>
                         </td>
                         <td>
-                            <h3>Maximum: <b>{{element.companieStatisticLatest.maxPrice}}</b></h3>
+                            <h3>Maximum: <b>{{element.companyStatisticLatest.maxPrice}}</b></h3>
                         </td>
                         <td>
-                            <h3>Minimum: <b>{{element.companieStatisticLatest.minPrice}}</b></h3>
+                            <h3>Minimum: <b>{{element.companyStatisticLatest.minPrice}}</b></h3>
                         </td>
                         <td>
-                            <h3>Volume: <b>{{element.companieStatisticLatest.volume}}</b></h3>
+                            <h3>Volume: <b>{{element.companyStatisticLatest.volume}}</b></h3>
                         </td>
                         <td>
-                            <h3>Trend Value <b>{{element.companieStatisticLatest.trendValue}}</b></h3>
+                            <h3>Trend Value <b>{{element.companyStatisticLatest.trendValue}}</b></h3>
                         </td>
                         <td>
                             <button type="button" class="btn btn-success"
@@ -45,7 +45,7 @@
                         </td>
                     </tr>
                 </table>
-                <table *ngIf="element.companieStatisticLatest != null && element.companieStatisticLatest.price == 0">
+                <table *ngIf="element.companyStatisticLatest != null && element.companyStatisticLatest.price == 0">
                     <tr>
                         <td>
                             <h3><b>New Stock !</b></h3>
@@ -62,7 +62,7 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row"
             [class.expanded]="row.isExpanded" (click)="expandCollapse(row)"></mat-row>
-        <mat-row *matRowDef="let row; columns: ['companieStatisticLatest'];"
+        <mat-row *matRowDef="let row; columns: ['companyStatisticLatest'];"
             [@detailExpand]="row.isExpanded == true ? 'expanded' : 'collapsed'" style="overflow: hidden">
         </mat-row>
 

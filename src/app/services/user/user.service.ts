@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Companie } from 'src/app/models/companie';
+import { Company } from 'src/app/models/company';
 import { User } from 'src/app/models/user';
 import { environment } from 'src/environments/environment';
 
@@ -52,7 +52,7 @@ export class UserService {
     return localStorageItem === null ? null : localStorageItem.selectedCompany;
   }
 
-  public setSelectedCompany(selectedCompany: Companie){
+  public setSelectedCompany(selectedCompany: Company){
     localStorage.setItem('selectedCompany', JSON.stringify({ selectedCompany: selectedCompany }));
   }
 

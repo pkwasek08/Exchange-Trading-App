@@ -24,7 +24,7 @@ export class MainPageComponent implements OnInit {
 
 
   setCompanyTable(){
-    this.router.navigateByUrl('/companie');
+    this.router.navigateByUrl('/company');
     this.closeNav();
   }
 

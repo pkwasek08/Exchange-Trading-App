@@ -14,7 +14,7 @@ export class ProfileComponent implements OnInit {
   loggedUser: User;
   stockUserList: StockUserTableView[];
   constructor(private userService: UserService,
-    private stockService: StockService) {
+              private stockService: StockService) {
   }
 
   ngOnInit(){
