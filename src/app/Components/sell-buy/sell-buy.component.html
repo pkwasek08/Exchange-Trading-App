@@ -4,28 +4,18 @@
         <h2>{{company.name}}&nbsp;&nbsp;&nbsp;{{company.industry}}</h2>
         <h3>Revenue: {{company.revenue}}&nbsp;&nbsp;&nbsp;Capital: {{company.capital}}</h3>
         <div style="display: block;">
-            <canvas style="margin-bottom: 10px;" baseChart width="400" height="400"
-              [datasets]="lineChartData"
-              [labels]="lineChartLabels"
-              [options]="lineChartOptions"
-              [colors]="lineChartColors"
-              [legend]="lineChartLegend"
-              [chartType]="lineChartType"
-              [plugins]="lineChartPlugins">
+            <canvas style="margin-bottom: 10px;" baseChart width="400" height="400" [datasets]="lineChartData"
+                [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColors"
+                [legend]="lineChartLegend" [chartType]="lineChartType" [plugins]="lineChartPlugins">
             </canvas>
-          </div>
-          <div style="display: block;">
-            <canvas baseChart style="margin-bottom: 15px;" width="400"
-              [datasets]="barChartData"
-              [labels]="lineChartLabels"
-              [options]="barChartOptions"
-              [plugins]="barChartPlugins"
-              [colors]="barChartColors"
-              [legend]="barChartLegend"
-              [chartType]="barChartType">
+        </div>
+        <div style="display: block;">
+            <canvas baseChart style="margin-bottom: 15px;" width="400" [datasets]="barChartData"
+                [labels]="lineChartLabels" [options]="barChartOptions" [plugins]="barChartPlugins"
+                [colors]="barChartColors" [legend]="barChartLegend" [chartType]="barChartType">
             </canvas>
-          </div>
-          
+        </div>
+
         <table class="table table-striped" style="background: white;">
             <thead>
                 <tr>
@@ -48,14 +38,11 @@
                     <td>{{static.volume}}</td>
                     <td>{{static.date | date:'dd.MM.yyyy'}}</td>
                 </tr>
-        </table>   
-        <mat-paginator [length]="companyStatisticPageNumber"
-               [pageSize]="companyStatisticPageSize"
-               [pageSizeOptions]="pageSizeOptions"
-               [pageIndex]="companyStatisticPageIndex"
-               [showFirstLastButtons] = "true"
-               (page)="pageEvent = setCompanyStatisticListPage($event)">
-        </mat-paginator>     
+        </table>
+        <mat-paginator [length]="companyStatisticPageNumber" [pageSize]="companyStatisticPageSize"
+            [pageSizeOptions]="pageSizeOptions" [pageIndex]="companyStatisticPageIndex" [showFirstLastButtons]="true"
+            (page)="pageEvent = setCompanyStatisticListPage($event)">
+        </mat-paginator>
         <div id="chartContainer" style="height: 370px; width: 100%; margin-left:auto;margin-right:auto;"></div>
     </div>
     <div>
@@ -76,15 +63,16 @@
                     </tr>
                     <tr style="display: inline-table;">
                         <mat-form-field style="width: 60px; margin:5px">
-                            <input type="number" min="0" [(ngModel)]="amountOrder" (change)="updatePriceOrder()" matInput placeholder="Amout">
+                            <input type="number" min="0" [(ngModel)]="amountOrder" (change)="updatePriceOrder()"
+                                matInput placeholder="Amout">
                         </mat-form-field>
                     </tr>
                     <tr>
                         <h3 style="font-family: Palatino">Total: <b>{{priceOrder}}</b></h3>
                     </tr>
                     <tr>
-                        <button style="width: 100%;" type="button" id="submitOrderId"
-                            class="btn btn-primary" (click)="onClickSubmitBtn()" [disabled]="!isValidOrder()">Submit
+                        <button style="width: 100%;" type="button" id="submitOrderId" class="btn btn-primary"
+                            (click)="onClickSubmitBtn()" [disabled]="!isValidOrder()">Submit
                             (select type)</button>
                     </tr>
                 </table>
@@ -127,10 +115,12 @@
                 <h1 style="font-family: Palatino">Your deposit</h1>
                 <h2 style="font-family: Palatino">Money: {{loggedUser.cash}}PLN</h2>
                 <h2 style="font-family: Palatino" *ngIf="stockUser != null">Stock: {{stockUser.amount}}</h2>
-                <h2 style="font-family: Palatino" *ngIf="stockUser != null">Actual value: </h2><h2 style="font-family: Palatino" *ngIf="stockUser != null">{{stockUserValue}} PLN</h2>
+                <h2 style="font-family: Palatino" *ngIf="stockUser != null">Actual value: </h2>
+                <h2 style="font-family: Palatino" *ngIf="stockUser != null">{{stockUserValue}} PLN</h2>
             </div>
         </div>
-        <div style="width: 95%; margin-right: 50px; display: flex; margin-bottom: 20px; background: white; padding: 40px; border-radius: 10px;font-family: Palatino; margin-left: 50px; text-align: center;">
+        <div
+            style="width: 95%; margin-right: 50px; display: flex; margin-bottom: 20px; background: white; padding: 40px; border-radius: 10px;font-family: Palatino; margin-left: 50px; text-align: center;">
             <table class="table table-striped" style="width: 48%; margin-left: 40px; margin: 10px;">
                 <thead>
                     <tr>
@@ -143,12 +133,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngIf="sellLimitOrder == null || sellLimitOrder.length == 0"><td colspan="3">There are no stock</td></tr>
+                    <tr *ngIf="sellLimitOrder == null || sellLimitOrder.length == 0">
+                        <td colspan="3">There are no stock</td>
+                    </tr>
                     <tr *ngFor="let order of sellLimitOrder">
                         <td style="color: #c52323">{{order.purchase}}</td>
                         <td>{{order.amount}}</td>
                         <td>{{order.price}}</td>
                     </tr>
+                </tbody>
             </table>
             <table class="table table-striped" style="width: 48%; margin-left: 40px; margin: 10px;">
                 <thead>
@@ -162,7 +155,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngIf="buyLimitOrder == null || buyLimitOrder.length == 0"><td colspan="3">There are no stock</td></tr>
+                    <tr *ngIf="buyLimitOrder == null || buyLimitOrder.length == 0">
+                        <td colspan="3">There are no stock</td>
+                    </tr>
                     <tr *ngFor="let order of buyLimitOrder">
                         <td style="color: green;">{{order.purchase}}</td>
                         <td>{{order.amount}}</td>
@@ -172,4 +167,3 @@
         </div>
     </div>
 </div>
-

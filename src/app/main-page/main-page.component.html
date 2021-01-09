@@ -13,8 +13,14 @@
             <li class="nav-item" *ngIf="isLoggedUser()">
                 <a class="nav-link" style="font-family: Palatino; margin-left: 10px;" routerLink="/profile">Profile</a>
             </li>
+            <li class="nav-item" *ngIf="isLoggedUser() && isLoggedAdmin()">
+                <a class="nav-link" style="font-family: Palatino; margin-left: 10px;" routerLink="/test-panel">New test</a>
+            </li>
+            <li class="nav-item" *ngIf="isLoggedUser() && isLoggedAdmin()">
+                <a class="nav-link" style="font-family: Palatino; margin-left: 10px;" routerLink="/test-history">Tests history</a>
+            </li>
             <li class="nav-item" *ngIf="isLoggedUser()">
-                <a class="nav-link" style="font-family: Palatino; margin-left: 10px; cursor: pointer;" (click)="onClickSignOut()">Sign out</a>
+                <a class="nav-link" style="font-family: Palatino; margin-left: 10px; cursor: pointer;" routerLink="/" (click)="onClickSignOut()">Sign out</a>
             </li>
         </ul>
     </div>

@@ -57,6 +57,10 @@ export class MainPageComponent implements OnInit {
     return this.userService.isLoggedUser();
   }
 
+  isLoggedAdmin(): boolean {
+    return this.userService.isLoggedAdmin();
+  }
+
   getLoggedUser(): User {
     return this.userService.getUser();
   }

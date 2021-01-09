@@ -1,0 +1,41 @@
+<div
+    style="height: max-content; background: white;width: fit-content; padding: 40px; border-radius: 10px; font-family: Palatino; text-align: center; width: 100%;">
+    <table class="table table-striped" style="width: 100%;">
+        <thead>
+            <tr> 
+                <th scope="col">Name</th>
+                <th scope="col">Date</th>
+                <th scope="col">Users</th>
+                <th scope="col">Series</th>
+                <th scope="col">Api</th>
+                <th scope="col">Database</th>
+                <th scope="col">Tester</th>
+                <th scope="col">Full</th>
+                <th scope="col">Request number</th>
+                <th scope="col">Volumes</th>
+                <th scope="col">Buy max</th>
+                <th scope="col">Buy min</th>
+                <th scope="col">Sell max</th>
+                <th scope="col">Sell min</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let test of testDetailsList">
+                <td>{{test.testName}}</td>
+                <td>{{test.date | date:'medium'}}</td>
+                <td>{{test.userNumber}}</td>
+                <td>{{test.series}}</td>
+                <td>{{test.exeTime}}ms</td>
+                <td>{{test.dbTime}}ms</td>
+                <td>{{getTesterTime(test)}}ms</td>
+                <td>{{test.fullTestTime}}ms</td>
+                <td>{{test.numberOfRequests}}</td>
+                <td>{{test.priceDetails.volumes}}</td>
+                <td>{{test.priceDetails.maxBuyPrice}} PLN</td>
+                <td>{{test.priceDetails.minBuyPrice}} PLN</td>
+                <td>{{test.priceDetails.maxSellPrice}} PLN</td>
+                <td>{{test.priceDetails.minSellPrice}} PLN</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

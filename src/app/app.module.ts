@@ -28,6 +28,9 @@ import { UserOrdersComponent } from './Components/user-orders/user-orders.compon
 import { SellBuyComponent } from './Components/sell-buy/sell-buy.component';
 import { ChartsModule } from 'ng2-charts';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { TestPanelComponent } from './Components/test-panel/test-panel.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { TestHistoryComponent } from './Components/test-history/test-history.component';
 
 const modulesLogin = [
   MatButtonModule,
@@ -44,7 +47,9 @@ const modulesLogin = [
     RegistrationComponent,
     ProfileComponent,
     UserOrdersComponent,
-    SellBuyComponent
+    SellBuyComponent,
+    TestPanelComponent,
+    TestHistoryComponent
   ],
   imports: [
     HttpClientModule,
@@ -53,6 +58,7 @@ const modulesLogin = [
     MatPaginatorModule,
     ChartsModule,
     modulesLogin,
+    MatProgressSpinnerModule,
     MatDatepickerModule,
     MatTableModule,
     MatNativeDateModule,

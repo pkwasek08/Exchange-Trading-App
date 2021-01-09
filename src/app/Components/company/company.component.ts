@@ -34,7 +34,7 @@ export class CompanyComponent implements OnInit {
               private router: Router) { }
   ngOnInit() {
     return this.companyService.getCompanies()
-      .subscribe(company => { this.companiesData = company });
+      .subscribe(company =>  this.companiesData = company);
   }
 
   getCompanyStatisticByDokumentId(rowId: number) {

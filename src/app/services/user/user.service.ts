@@ -36,6 +36,10 @@ export class UserService {
     return (this.getUser() != null);
   }
 
+  public isLoggedAdmin(): boolean {
+    return (this.getUser().id === 1);
+  }
+
   public updateUserCash() {
     this.http.get<User>(this.apiUrl + '/' + this.getUser().id).subscribe(user => {
       this.setUser(user);

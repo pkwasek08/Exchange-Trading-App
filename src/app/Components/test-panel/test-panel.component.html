@@ -1,0 +1,66 @@
+    <div
+        style="margin-bottom: 20px; height: max-content; background: white;width: fit-content; padding: 40px; border-radius: 10px; font-family: Palatino; text-align: center; margin-left: 40%;">
+        <table>
+            <tr>
+                <h1 style="font-family: Palatino;">
+                    New test
+                </h1>
+            </tr>
+            <tr>
+                <mat-form-field style="width: 60px; margin:5px">
+                    <input type="number" min="1" [(ngModel)]="testUserNumber" matInput placeholder="User">
+                </mat-form-field>
+                <mat-form-field style="width: 60px;margin:5px">
+                    <input type="number" min="1" [(ngModel)]="testSeriesNumber" matInput placeholder="Series">
+                </mat-form-field>
+            </tr>
+            <tr>
+                <mat-form-field style="width: 140px;margin:5px">
+                    <input type="text" [(ngModel)]="testName" matInput placeholder="Test name">
+                </mat-form-field>
+            </tr>
+            <tr *ngIf="isShowSpinner == false" style="text-align: -webkit-center; height: 100px;">
+                <button type="button" class="btn btn-success" id="sellBtn"
+                    style="width:110px; margin-top: 30px; font-size: 20px;" (click)="doTest()">Start</button>
+            </tr>
+            <tr style="text-align: -webkit-center; height: 100px;" *ngIf="isShowSpinner">
+                <mat-spinner></mat-spinner>
+            </tr>
+        </table>
+    </div>
+    <div *ngIf="testDetails != null" 
+        style="height: max-content; background: white;width: fit-content; padding: 40px; border-radius: 10px; font-family: Palatino; text-align: center; margin-left:12%;">
+        <table class="table table-striped">
+            <tr style="background: #f4f4f4;">
+                <th colspan="10">
+                    <h1 style="font-family: Palatino;">
+                        RESULT
+                    </h1>
+                </th>
+            </tr>
+            <tr>
+                <th scope="col">Api</th>
+                <th scope="col">Database</th>
+                <th scope="col">Tester</th>
+                <th scope="col">Full</th>
+                <th scope="col">Request number</th>
+                <th scope="col">Volumes</th>
+                <th scope="col">Buy max</th>
+                <th scope="col">Buy min</th>
+                <th scope="col">Sell max</th>
+                <th scope="col">Sell min</th>
+            <tr>
+            <tr>
+                <td>{{testDetails.exeTime}}ms</td>
+                <td>{{testDetails.dbTime}}ms</td>
+                <td>{{getTesterTime()}}ms</td>
+                <td>{{testDetails.fullTestTime}}ms</td>
+                <td>{{testDetails.numberOfRequests}}</td>
+                <td>{{testDetails.priceDetails.volumes}}</td>
+                <td>{{testDetails.priceDetails.maxBuyPrice}} PLN</td>
+                <td>{{testDetails.priceDetails.minBuyPrice}} PLN</td>
+                <td>{{testDetails.priceDetails.maxSellPrice}} PLN</td>
+                <td>{{testDetails.priceDetails.minSellPrice}} PLN</td>
+            </tr>
+        </table>
+    </div>
