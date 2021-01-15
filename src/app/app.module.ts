@@ -31,6 +31,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { TestPanelComponent } from './Components/test-panel/test-panel.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { TestHistoryComponent } from './Components/test-history/test-history.component';
+import {MatSelectModule} from '@angular/material/select';
 
 const modulesLogin = [
   MatButtonModule,
@@ -58,6 +59,7 @@ const modulesLogin = [
     MatPaginatorModule,
     ChartsModule,
     modulesLogin,
+    MatSelectModule,
     MatProgressSpinnerModule,
     MatDatepickerModule,
     MatTableModule,

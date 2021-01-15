@@ -11,9 +11,15 @@ export class TestPanelService {
 
   constructor(private http: HttpClient) { }
 
-  doTest(numberUser: number, numberSeries:number, testName: string){
-    const params = new HttpParams().set('numberUser', numberUser.toString()).set('numberSeries', numberSeries.toString()).set('testName', testName);
-    return this.http.get<TestDetails>(this.apiTestUrl + '/simulate?' + params);
+  doTest(numberUser: number, numberSeries:number, companyId:number, startUserMoney:number, startStockNumber:number, testName: string, daysNumber:number){
+    const params = new HttpParams().set('numberUser', numberUser.toString())
+                                   .set('numberSeries', numberSeries.toString())
+                                   .set('companyId', companyId.toString())
+                                   .set('startUserMoney', startUserMoney.toString())
+                                   .set('startStockNumber', startStockNumber.toString())
+                                   .set('testName', testName)
+                                   .set('daysNumber', daysNumber.toString());
+    return this.http.get<TestDetails[]>(this.apiTestUrl + '/simulate?' + params);
   }
 
   getAllTestDetails(){

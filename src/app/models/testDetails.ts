@@ -8,6 +8,9 @@ export class TestDetails {
     userNumber: number;
     series: number;
     date: Date;
+    startUserMoney: number;
+    startNumberStock: number;
+    companyName: string;
     numberOfRequests: number;
     priceDetails: TestPriceDetails;
     constructor(testName: string,
@@ -17,6 +20,9 @@ export class TestDetails {
         userNumber: number,
         series: number,
         date: Date,
+        startUserMoney: number,
+        startNumberStock: number,
+        companyName: string,
         numberOfRequests: number,
         priceDetails: TestPriceDetails) {
         this.testName = testName;
@@ -26,6 +32,9 @@ export class TestDetails {
         this.userNumber = userNumber;
         this.series = series;
         this.date = date;
+        this.startUserMoney = startUserMoney;
+        this.startNumberStock = startNumberStock;
+        this.companyName = companyName;
         this.numberOfRequests = numberOfRequests;
         this.priceDetails = priceDetails;
     }

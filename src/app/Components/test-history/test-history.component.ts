@@ -9,14 +9,18 @@ import { TestPanelService } from 'src/app/services/testPanel/test-panel.service'
 })
 export class TestHistoryComponent implements OnInit {
   public testDetailsList: TestDetails[];
+  public isShowSpinner = true;
 
   constructor(private testPanelService: TestPanelService) { }
 
   ngOnInit(): void {
-    this.testPanelService.getAllTestDetails().subscribe(testDetailsList => this.testDetailsList = testDetailsList);
+    this.testPanelService.getAllTestDetails().subscribe(testDetailsList => {
+      this.testDetailsList = testDetailsList;
+      this.isShowSpinner = false;
+    });
   }
 
-  getTesterTime(testDetails: TestDetails){
+  getTesterTime(testDetails: TestDetails) {
     return testDetails.fullTestTime - testDetails.exeTime;
   }
 }

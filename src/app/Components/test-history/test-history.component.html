@@ -1,17 +1,21 @@
-<div
+<mat-spinner *ngIf="isShowSpinner" style="text-align: -webkit-center; margin-top: 100px; margin-left: 45%;"></mat-spinner>
+<div *ngIf="isShowSpinner == false"
     style="height: max-content; background: white;width: fit-content; padding: 40px; border-radius: 10px; font-family: Palatino; text-align: center; width: 100%;">
+    <h1 style="font-family: Palatino; font-size: 30px;">Test details</h1>
     <table class="table table-striped" style="width: 100%;">
         <thead>
             <tr> 
                 <th scope="col">Name</th>
                 <th scope="col">Date</th>
+                <th scope="col">Company</th>
                 <th scope="col">Users</th>
                 <th scope="col">Series</th>
+                <th scope="col">Start user money</th>
+                <th scope="col">Start number stock</th>
                 <th scope="col">Api</th>
                 <th scope="col">Database</th>
                 <th scope="col">Tester</th>
                 <th scope="col">Full</th>
-                <th scope="col">Request number</th>
                 <th scope="col">Volumes</th>
                 <th scope="col">Buy max</th>
                 <th scope="col">Buy min</th>
@@ -20,16 +24,19 @@
             </tr>
         </thead>
         <tbody>
+            <tr *ngIf="testDetailsList == null || testDetailsList.length == 0"><td colspan="14">No data</td></tr>
             <tr *ngFor="let test of testDetailsList">
                 <td>{{test.testName}}</td>
-                <td>{{test.date | date:'medium'}}</td>
+                <td>{{test.date | date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                <td>{{test.companyName}}</td>
                 <td>{{test.userNumber}}</td>
                 <td>{{test.series}}</td>
+                <td>{{test.startUserMoney}}</td>
+                <td>{{test.startNumberStock}}</td>
                 <td>{{test.exeTime}}ms</td>
                 <td>{{test.dbTime}}ms</td>
                 <td>{{getTesterTime(test)}}ms</td>
                 <td>{{test.fullTestTime}}ms</td>
-                <td>{{test.numberOfRequests}}</td>
                 <td>{{test.priceDetails.volumes}}</td>
                 <td>{{test.priceDetails.maxBuyPrice}} PLN</td>
                 <td>{{test.priceDetails.minBuyPrice}} PLN</td>
