@@ -1,4 +1,3 @@
-import { ComponentFactory } from '@angular/core';
 import { Company } from './company';
 import { User } from './user';
 

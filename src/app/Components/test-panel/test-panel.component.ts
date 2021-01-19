@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Company } from 'src/app/models/company';
+import { CompanyInfo } from 'src/app/models/companyInfo';
 import { TestDetails } from 'src/app/models/testDetails';
+import { TestSets } from 'src/app/models/testSets';
+import { TestSetsInfo } from 'src/app/models/testSetsInfo';
 import { CompanyService } from 'src/app/services/company/company.service';
 import { TestPanelService } from 'src/app/services/testPanel/test-panel.service';
+import { TestSetsService } from 'src/app/services/testSets/test-sets.service';
 
 @Component({
   selector: 'app-test-panel',
@@ -13,14 +16,12 @@ import { TestPanelService } from 'src/app/services/testPanel/test-panel.service'
 })
 export class TestPanelComponent implements OnInit {
 
-  public testUserNumber = 2;
-  public testSeriesNumber = 1;
-  public testCompanyList: Company[] = [];
-  public testSelectedCompany: Company;
-  public testStartStockNumber = 1;
-  public testStartUserMoney = 1000;
-  public testName = '';
-  public testDaysNumber = 1;
+  public testCompanyList: CompanyInfo[] = [];
+  public testSelectedCompany: CompanyInfo = new CompanyInfo(null, null);
+  public newTestSets: TestSets;
+  public testSetsInfoList: TestSetsInfo[] = [];
+  public testSetsInfoSelectedId: number;
+  public testSetsList: TestSets[] = [];
   public testDetailsList: TestDetails[] = [];
   public isShowSpinner = false;
   testUserNumberFormControl = new FormControl('', [
@@ -53,17 +54,21 @@ export class TestPanelComponent implements OnInit {
 
   constructor(private snackBar: MatSnackBar,
     private testPanelService: TestPanelService,
+    private testSetsService: TestSetsService,
     private companyService: CompanyService) { }
 
   ngOnInit(): void {
-    this.testCompanyList.push(new Company(0, "Random", null, null, null, null, null));
-    this.companyService.getCompanies().subscribe(companyList => companyList.forEach(company => this.testCompanyList.push(company)));
+    this.initCompanyList();
+    this.newTestSets = new TestSets(0, 2, 1, 0, null, 10000, 10, null, 1);
+    this.initTestSetsInfoList();
   }
 
 
   doTest() {
     this.isShowSpinner = true;
-    this.testPanelService.doTest(this.testUserNumber, this.testSeriesNumber, this.testSelectedCompany.id, this.testStartUserMoney, this.testStartStockNumber, this.testName, this.testDaysNumber).subscribe(testDetails => {
+    this.newTestSets.companyId = this.testSelectedCompany.companyId;
+    this.newTestSets.companyName = this.testSelectedCompany.companyName;
+    this.testPanelService.doTest(this.newTestSets).subscribe(testDetails => {
       this.testDetailsList = testDetails;
       this.isShowSpinner = false;
     },
@@ -80,7 +85,7 @@ export class TestPanelComponent implements OnInit {
 
   }
 
-  onClickTestBtn() {
+  onClickStartBtn() {
     this.testUserNumberFormControl.markAsTouched();
     this.testSeriesNumberFormControl.markAsTouched();
     this.testChosedCompanyFormControl.markAsTouched();
@@ -93,6 +98,40 @@ export class TestPanelComponent implements OnInit {
     }
   }
 
+  onClickSaveBtn() {
+    this.testUserNumberFormControl.markAsTouched();
+    this.testSeriesNumberFormControl.markAsTouched();
+    this.testChosedCompanyFormControl.markAsTouched();
+    this.testStartStockNumberFormControl.markAsTouched();
+    this.testStartUserMoneyFormControl.markAsTouched();
+    this.testNameFormControl.markAsTouched();
+    this.testDaysFormControl.markAsTouched();
+    if (this.isValidNewTest()) {
+      this.saveTest();
+    }
+  }
+
+  saveTest() {
+    this.isShowSpinner = true;
+    this.newTestSets.companyId = this.testSelectedCompany.companyId;
+    this.newTestSets.companyName = this.testSelectedCompany.companyName;
+    this.testSetsService.addTestSets(this.newTestSets).subscribe(results => {
+      this.snackBar.open('New test sets added correct', 'x', {
+        panelClass: 'custom-css-class-success',
+        duration: 5000,
+      });
+      this.initTestSetsInfoList();
+      this.isShowSpinner = false;
+    },
+      (error) => {
+        this.snackBar.open(error.status + ' error :(', 'x', {
+          panelClass: 'custom-css-class-error',
+          duration: 5000,
+        });
+        this.isShowSpinner = false;
+      });
+  }
+
   isValidNewTest() {
     return this.testUserNumberFormControl.valid && this.testSeriesNumberFormControl.valid && this.testChosedCompanyFormControl.valid
       && this.testStartStockNumberFormControl.valid && this.testStartUserMoneyFormControl.valid && this.testNameFormControl.valid && this.testDaysFormControl.valid;
@@ -101,4 +140,39 @@ export class TestPanelComponent implements OnInit {
   getTesterTime(fullTestTime: number, exeTime: number) {
     return fullTestTime - exeTime;
   }
+
+  initTestSetsList() {
+    this.testSetsService.getTestSets().subscribe(testSetsList => {
+      this.testSetsList = testSetsList;
+    });
+
+  }
+
+  initTestSetsInfoList() {
+    this.testSetsService.getTestSetsInfoList().subscribe(testSetsInfoList => {
+      this.testSetsInfoList = [];
+      this.testSetsInfoList.push(new TestSetsInfo(0, "NEW TEST"));
+      this.testSetsInfoSelectedId = 0;
+      testSetsInfoList.forEach(testSetsInfo => this.testSetsInfoList.push(testSetsInfo));
+    });
+
+  }
+
+  changeTestSets() {
+    if (this.testSetsInfoSelectedId != null && this.testSetsInfoSelectedId != 0) {
+      this.testSetsService.getTestSetsById(this.testSetsInfoSelectedId).subscribe(testSets => {
+        this.newTestSets = testSets;
+        this.testSelectedCompany = new CompanyInfo(this.newTestSets.companyId, this.newTestSets.companyName);
+      });
+    } else {
+      this.newTestSets = new TestSets(0, 2, 1, 0, null, 10000, 10, null, 1);
+      this.testSelectedCompany = new CompanyInfo(null, null);
+    }
+  }
+
+  initCompanyList() {
+    this.testCompanyList.push(new CompanyInfo(0, "Random"));
+    this.companyService.getCompaniesInfo().subscribe(companyList => companyList.forEach(company => this.testCompanyList.push(company)));
+  }
+
 }
