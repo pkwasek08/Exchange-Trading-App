@@ -32,6 +32,7 @@ import { TestPanelComponent } from './Components/test-panel/test-panel.component
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { TestHistoryComponent } from './Components/test-history/test-history.component';
 import {MatSelectModule} from '@angular/material/select';
+import { SafePipeModule } from 'safe-pipe';
 
 const modulesLogin = [
   MatButtonModule,
@@ -57,6 +58,7 @@ const modulesLogin = [
     BrowserModule,
     MatDialogModule,
     MatPaginatorModule,
+    SafePipeModule,
     ChartsModule,
     modulesLogin,
     MatSelectModule,

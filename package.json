@@ -24,11 +24,13 @@
     "@ng-bootstrap/ng-bootstrap": "^7.0.0",
     "bootstrap": "^4.5.3",
     "chart.js": "^2.9.4",
+    "helmet": "^4.4.1",
     "jquery": "^3.5.1",
     "ng2-charts": "^2.4.2",
     "ngx-bootstrap": "^6.1.0",
     "popper.js": "^1.16.1",
     "rxjs": "~6.5.4",
+    "safe-pipe": "^1.0.3",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
   },

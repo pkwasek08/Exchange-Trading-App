@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CompanyInfo } from 'src/app/models/companyInfo';
 import { TestDetails } from 'src/app/models/testDetails';
 import { TestSets } from 'src/app/models/testSets';
@@ -24,6 +25,7 @@ export class TestPanelComponent implements OnInit {
   public testSetsList: TestSets[] = [];
   public testDetailsList: TestDetails[] = [];
   public isShowSpinner = false;
+  public chartsUrlList: string[] = ['', '', '', ''];
   testUserNumberFormControl = new FormControl('', [
     Validators.required,
     Validators.min(2)
@@ -51,11 +53,16 @@ export class TestPanelComponent implements OnInit {
     Validators.required,
     Validators.min(1)
   ]);
+  testUrlPanelFormControl = new FormControl('', [
+    Validators.required
+  ]);
+  safeSrc: SafeResourceUrl;
 
-  constructor(private snackBar: MatSnackBar,
+  constructor(private snackBar: MatSnackBar,private sanitizer: DomSanitizer,
     private testPanelService: TestPanelService,
     private testSetsService: TestSetsService,
-    private companyService: CompanyService) { }
+    private companyService: CompanyService) {     this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl
+    }
 
   ngOnInit(): void {
     this.initCompanyList();
@@ -173,6 +180,13 @@ export class TestPanelComponent implements OnInit {
   initCompanyList() {
     this.testCompanyList.push(new CompanyInfo(0, "Random"));
     this.companyService.getCompaniesInfo().subscribe(companyList => companyList.forEach(company => this.testCompanyList.push(company)));
+  }
+
+  onCLickAddUrl(panelUrlId: number) {
+    this.chartsUrlList[panelUrlId - 1] = (<HTMLInputElement>document.getElementById("urlPanelId" + panelUrlId)).value;
+    return this.sanitizer.bypassSecurityTrustUrl( this.chartsUrlList[panelUrlId - 1]);
+
+    console.log(this.chartsUrlList)
   }
 
 }

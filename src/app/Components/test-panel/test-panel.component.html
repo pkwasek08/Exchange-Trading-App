@@ -1,108 +1,186 @@
-<div id="newTestPanel"
-    style="margin-bottom: 20px; height: max-content; background: white;width: fit-content; min-width: 26%; padding-left: 40px;  padding-right: 40px; padding-bottom: 40px;border-radius: 10px; font-family: Palatino; text-align: center; margin-left: 35%;">
-    <table>
-        <tr>
-            <h2 style="font-family: Palatino;">
-                <mat-form-field appearance="fill">
-                    <mat-select [(value)]="testSetsInfoSelectedId" (selectionChange)="changeTestSets()">
-                        <mat-option *ngFor="let testSetsInfo of testSetsInfoList" [value]="testSetsInfo.id">
-                            {{testSetsInfo.testName}}
+<div style="display: flex;">
+    <div style="width: min-content;">
+        <div *ngIf="chartsUrlList[0] != ''"
+            style="width: 500px; height: 205px; background: white; border-radius: 10px; font-family: Palatino; text-align: center;">
+            <iframe [src]="chartsUrlList[0] | safe: 'resourceUrl'" width="480" height="200" frameborder="0"></iframe>
+        </div>
+        <div *ngIf="chartsUrlList[1] != ''"
+            style="width: 500px; height: 205px; background: white; border-radius: 10px; font-family: Palatino; text-align: center;  margin-top: 10px;">
+            <iframe [src]="chartsUrlList[1] | safe: 'resourceUrl'" width="480" height="200"
+                frameborder="0"></iframe>
+        </div>
+        <div *ngIf="chartsUrlList[0] == ''"
+            style="width: 500px; height: 205px; background: white; border-radius: 10px; font-family: Palatino; text-align: center;">
+            <mat-form-field style="text-align: center; margin-top: 30px;">
+                <mat-label>Url panel</mat-label>
+                <input id="urlPanelId1" type="text"
+                    [formControl]="testUrlPanelFormControl" matInput placeholder="Url panel">
+                <mat-error *ngIf="testNameFormControl.hasError('required')">
+                    Url is <strong>required</strong>
+                </mat-error>
+            </mat-form-field><br />
+            <button type="button" class="btn btn-secondary" (click)="onCLickAddUrl(1)"
+                style="width:110px; margin-top: 30px; font-size: 20px;">Add</button>
+        </div>
+        <div *ngIf="chartsUrlList[1] == ''"
+            style="width: 500px; height: 205px; background: white; border-radius: 10px; font-family: Palatino; text-align: center; margin-top: 10px;">
+            <mat-form-field style="text-align: center; margin-top: 30px;">
+                <mat-label>Url panel</mat-label>
+                <input id="urlPanelId2" type="text" [formControl]="testUrlPanelFormControl"
+                    matInput placeholder="Url panel">
+                <mat-error *ngIf="testNameFormControl.hasError('required')">
+                    Url is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <br />
+            <button type="button" class="btn btn-secondary" (click)="onCLickAddUrl(2)"
+                style="width:110px; margin-top: 30px; font-size: 20px;">Add</button>
+        </div>
+    </div>
+    <div id="newTestPanel"
+        style="margin-bottom: 20px; height: max-content; background: white;width: fit-content; min-width: fit-content; padding-left: 40px;  padding-right: 40px; border-radius: 10px; font-family: Palatino; text-align: center; margin-left: 10px;">
+        <table>
+            <tr>
+                <h2 style="font-family: Palatino;">
+                    <mat-form-field appearance="fill">
+                        <mat-select [(value)]="testSetsInfoSelectedId" (selectionChange)="changeTestSets()">
+                            <mat-option *ngFor="let testSetsInfo of testSetsInfoList" [value]="testSetsInfo.id">
+                                {{testSetsInfo.testName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </h2>
+            </tr>
+            <tr>
+                <mat-form-field style="width: 65px;margin:5px">
+                    <mat-label>Series</mat-label>
+                    <input type="number" min="1" [(ngModel)]="newTestSets.series"
+                        [formControl]="testSeriesNumberFormControl" matInput placeholder="Series">
+                    <mat-error *ngIf="testSeriesNumberFormControl.hasError('required')">
+                        Series number is <strong>required</strong>
+                    </mat-error>
+                    <mat-error *ngIf="testSeriesNumberFormControl.hasError('min')">
+                        The least series is 1
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field style="width: 65px; margin:5px">
+                    <mat-label>Users</mat-label>
+                    <input type="number" min="1" [(ngModel)]="newTestSets.numberOfUsers"
+                        [formControl]="testUserNumberFormControl" matInput placeholder="User">
+                    <mat-error *ngIf="testUserNumberFormControl.hasError('required')">
+                        Users number is <strong>required</strong>
+                    </mat-error>
+                    <mat-error *ngIf="testUserNumberFormControl.hasError('min')">
+                        The smallest users number is 2
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field style="width: 90px; margin:5px">
+                    <mat-label>Start user money</mat-label>
+                    <input type="number" min="1000" [(ngModel)]="newTestSets.startUserMoney"
+                        [formControl]="testStartUserMoneyFormControl" matInput placeholder="Start user money">
+                    <mat-error *ngIf="testStartUserMoneyFormControl.hasError('required')">
+                        Start user money is <strong>required</strong>
+                    </mat-error>
+                    <mat-error *ngIf="testStartUserMoneyFormControl.hasError('min')">
+                        The smallest start user money is 1000
+                    </mat-error>
+                </mat-form-field>
+            </tr>
+            <tr>
+                <mat-form-field style="width: 100px; margin:5px">
+                    <mat-label>Start number stock</mat-label>
+                    <input type="number" min="1" [(ngModel)]="newTestSets.startStockNumber"
+                        [formControl]="testStartStockNumberFormControl" matInput placeholder="Start number stock">
+                    <mat-error *ngIf="testStartStockNumberFormControl.hasError('required')">
+                        Start number stock is <strong>required</strong>
+                    </mat-error>
+                    <mat-error *ngIf="testStartStockNumberFormControl.hasError('min')">
+                        The smallest start number stock is 1
+                    </mat-error>
+                    <mat-error *ngIf="testStartStockNumberFormControl.hasError('max')">
+                        The biggest start number stock is 10
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field style="width: 90px; margin:5px">
+                    <mat-label>Days</mat-label>
+                    <input type="number" min="1" [(ngModel)]="newTestSets.days" [formControl]="testDaysFormControl"
+                        matInput placeholder="Start user money">
+                    <mat-error *ngIf="testDaysFormControl.hasError('required')">
+                        Days number is <strong>required</strong>
+                    </mat-error>
+                    <mat-error *ngIf="testDaysFormControl.hasError('min')">
+                        The smallest days number is 1
+                    </mat-error>
+                </mat-form-field>
+            </tr>
+            <tr>
+                <mat-form-field style="width: 200px; margin:5px">
+                    <mat-label>Test name</mat-label>
+                    <input type="text" [(ngModel)]="newTestSets.testName" [formControl]="testNameFormControl" matInput
+                        placeholder="Test name">
+                    <mat-error *ngIf="testNameFormControl.hasError('required')">
+                        Test name is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" style="width: 140px; margin:5px;">
+                    <mat-label>Company</mat-label>
+                    <mat-select [(value)]="testSelectedCompany.companyId" [formControl]="testChosedCompanyFormControl">
+                        <mat-option *ngFor="let company of testCompanyList" [value]="company.companyId">
+                            {{company.companyName}}
                         </mat-option>
                     </mat-select>
+                    <mat-error *ngIf="testChosedCompanyFormControl.hasError('required')">
+                        Company is <strong>required</strong>
+                    </mat-error>
                 </mat-form-field>
-            </h2>
-        </tr>
-        <tr>
-            <mat-form-field style="width: 65px;margin:5px">
-                <mat-label>Series</mat-label>
-                <input type="number" min="1" [(ngModel)]="newTestSets.series"
-                    [formControl]="testSeriesNumberFormControl" matInput placeholder="Series">
-                <mat-error *ngIf="testSeriesNumberFormControl.hasError('required')">
-                    Series number is <strong>required</strong>
-                </mat-error>
-                <mat-error *ngIf="testSeriesNumberFormControl.hasError('min')">
-                    The least series is 1
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field style="width: 65px; margin:5px">
-                <mat-label>Users</mat-label>
-                <input type="number" min="1" [(ngModel)]="newTestSets.numberOfUsers"
-                    [formControl]="testUserNumberFormControl" matInput placeholder="User">
-                <mat-error *ngIf="testUserNumberFormControl.hasError('required')">
-                    Users number is <strong>required</strong>
-                </mat-error>
-                <mat-error *ngIf="testUserNumberFormControl.hasError('min')">
-                    The smallest users number is 2
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field style="width: 90px; margin:5px">
-                <mat-label>Start user money</mat-label>
-                <input type="number" min="1000" [(ngModel)]="newTestSets.startUserMoney"
-                    [formControl]="testStartUserMoneyFormControl" matInput placeholder="Start user money">
-                <mat-error *ngIf="testStartUserMoneyFormControl.hasError('required')">
-                    Start user money is <strong>required</strong>
-                </mat-error>
-                <mat-error *ngIf="testStartUserMoneyFormControl.hasError('min')">
-                    The smallest start user money is 1000
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field style="width: 100px; margin:5px">
-                <mat-label>Start number stock</mat-label>
-                <input type="number" min="1" [(ngModel)]="newTestSets.startStockNumber"
-                    [formControl]="testStartStockNumberFormControl" matInput placeholder="Start number stock">
-                <mat-error *ngIf="testStartStockNumberFormControl.hasError('required')">
-                    Start number stock is <strong>required</strong>
-                </mat-error>
-                <mat-error *ngIf="testStartStockNumberFormControl.hasError('min')">
-                    The smallest start number stock is 1
-                </mat-error>
-                <mat-error *ngIf="testStartStockNumberFormControl.hasError('max')">
-                    The biggest start number stock is 10
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field style="width: 90px; margin:5px">
-                <mat-label>Days</mat-label>
-                <input type="number" min="1" [(ngModel)]="newTestSets.days" [formControl]="testDaysFormControl" matInput
-                    placeholder="Start user money">
-                <mat-error *ngIf="testDaysFormControl.hasError('required')">
-                    Days number is <strong>required</strong>
-                </mat-error>
-                <mat-error *ngIf="testDaysFormControl.hasError('min')">
-                    The smallest days number is 1
-                </mat-error>
-            </mat-form-field>
-        </tr>
-        <tr>
-            <mat-form-field style="width: 200px; margin:5px">
-                <mat-label>Test name</mat-label>
-                <input type="text" [(ngModel)]="newTestSets.testName" [formControl]="testNameFormControl" matInput
-                    placeholder="Test name">
+            </tr>
+            <tr *ngIf="isShowSpinner == false" style="text-align: -webkit-center; height: 100px;">
+                <button type="button" class="btn btn-success" id="sellBtn"
+                    style="width:110px; margin-top: 30px; font-size: 20px;" (click)="onClickStartBtn()">Start</button>
+                <button type="button" class="btn btn-primary" id="saveBtn"
+                    style="width:110px; margin-top: 30px; font-size: 20px;" (click)="onClickSaveBtn()">Save</button>
+            </tr>
+            <tr style="text-align: -webkit-center; height: 100px;" *ngIf="isShowSpinner">
+                <mat-spinner></mat-spinner>
+            </tr>
+        </table>
+    </div>
+    <div style="margin-left: 10px;">
+        <div *ngIf="chartsUrlList[2] != ''"
+            style="width: 500px; height: 200px; background: white; border-radius: 10px; font-family: Palatino; text-align: center;">
+            <iframe [src]="chartsUrlList[2] | safe: 'resourceUrl'" width="480" height="200" frameborder="0"></iframe>
+        </div>
+        <div *ngIf="chartsUrlList[3] != ''"
+            style="width: 500px; height: 205px; background: white; border-radius: 10px; font-family: Palatino; text-align: center; margin-top: 10px;">
+            <iframe [src]="chartsUrlList[3] | safe: 'resourceUrl'" width="480" height="200" frameborder="0"></iframe>
+        </div>
+        <div *ngIf="chartsUrlList[2] == ''"
+            style="width: 500px; height: 200px; background: white; border-radius: 10px; font-family: Palatino; text-align: center;">
+            <mat-form-field style="text-align: center; margin-top: 30px;">
+                <mat-label>Url panel</mat-label>
+                <input type="text" id="urlPanelId3" [formControl]="testUrlPanelFormControl"
+                    matInput placeholder="Url panel">
                 <mat-error *ngIf="testNameFormControl.hasError('required')">
-                    Test name is <strong>required</strong>
+                    Url is <strong>required</strong>
                 </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="fill" style="width: 140px; margin:5px;">
-                <mat-label>Company</mat-label>
-                <mat-select [(value)]="testSelectedCompany.companyId" [formControl]="testChosedCompanyFormControl">
-                    <mat-option *ngFor="let company of testCompanyList" [value]="company.companyId">
-                        {{company.companyName}}
-                    </mat-option>
-                </mat-select>
-                <mat-error *ngIf="testChosedCompanyFormControl.hasError('required')">
-                    Company is <strong>required</strong>
+            </mat-form-field><br />
+            <button type="button" class="btn btn-secondary" style="width:110px; margin-top: 30px; font-size: 20px;"
+                (click)="onCLickAddUrl(3)">Add</button>
+        </div>
+        <div *ngIf="chartsUrlList[3] == ''"
+            style="width: 500px; height: 205px; background: white; border-radius: 10px; font-family: Palatino; text-align: center; margin-top: 10px;">
+            <mat-form-field style="text-align: center; margin-top: 30px;">
+                <mat-label>Url panel</mat-label>
+                <input type="text" id="urlPanelId4" [formControl]="testUrlPanelFormControl"
+                    matInput placeholder="Url panel">
+                <mat-error *ngIf="testNameFormControl.hasError('required')">
+                    Url is <strong>required</strong>
                 </mat-error>
-            </mat-form-field>
-        </tr>
-        <tr *ngIf="isShowSpinner == false" style="text-align: -webkit-center; height: 100px;">
-            <button type="button" class="btn btn-success" id="sellBtn"
-                style="width:110px; margin-top: 30px; font-size: 20px;" (click)="onClickStartBtn()">Start</button>
-            <button type="button" class="btn btn-primary" id="saveBtn"
-                style="width:110px; margin-top: 30px; font-size: 20px;" (click)="onClickSaveBtn()">Save</button>
-        </tr>
-        <tr style="text-align: -webkit-center; height: 100px;" *ngIf="isShowSpinner">
-            <mat-spinner></mat-spinner>
-        </tr>
-    </table>
+            </mat-form-field><br />
+            <button type="button" class="btn btn-secondary" style="width:110px; margin-top: 30px; font-size: 20px;"
+                (click)="onCLickAddUrl(4)">Add</button>
+        </div>
+    </div>
 </div>
 <div *ngIf="testDetailsList != null && testDetailsList.length != 0"
     style="height: max-content; background: white;width: fit-content; padding: 40px; border-radius: 10px; font-family: Palatino; text-align: center; margin-left:10%; min-width: 80%;">
