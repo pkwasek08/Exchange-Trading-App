@@ -6,8 +6,8 @@ export class TestSets{
     companyName: string;
     startUserMoney: number;
     startStockNumber: number;
-    testName: string;
     days: number;
+    testName: string;
 
     constructor(id: number, numberOfUsers :number, series:number, companyId:number, companyName: string, 
         startUserMoney: number, startStockNumber: number, testName: string, days: number){

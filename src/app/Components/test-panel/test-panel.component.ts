@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer} from '@angular/platform-browser';
 import { CompanyInfo } from 'src/app/models/companyInfo';
 import { TestDetails } from 'src/app/models/testDetails';
 import { TestSets } from 'src/app/models/testSets';
@@ -56,12 +56,11 @@ export class TestPanelComponent implements OnInit {
   testUrlPanelFormControl = new FormControl('', [
     Validators.required
   ]);
-  safeSrc: SafeResourceUrl;
 
   constructor(private snackBar: MatSnackBar,private sanitizer: DomSanitizer,
     private testPanelService: TestPanelService,
     private testSetsService: TestSetsService,
-    private companyService: CompanyService) {     this.safeSrc =  this.sanitizer.bypassSecurityTrustResourceUrl
+    private companyService: CompanyService) {
     }
 
   ngOnInit(): void {
@@ -74,7 +73,7 @@ export class TestPanelComponent implements OnInit {
   doTest() {
     this.isShowSpinner = true;
     this.newTestSets.companyId = this.testSelectedCompany.companyId;
-    this.newTestSets.companyName = this.testSelectedCompany.companyName;
+    this.newTestSets.companyName = this.testCompanyList.find(company => company.companyId === this.testSelectedCompany.companyId).companyName;
     this.testPanelService.doTest(this.newTestSets).subscribe(testDetails => {
       this.testDetailsList = testDetails;
       this.isShowSpinner = false;
@@ -169,7 +168,8 @@ export class TestPanelComponent implements OnInit {
     if (this.testSetsInfoSelectedId != null && this.testSetsInfoSelectedId != 0) {
       this.testSetsService.getTestSetsById(this.testSetsInfoSelectedId).subscribe(testSets => {
         this.newTestSets = testSets;
-        this.testSelectedCompany = new CompanyInfo(this.newTestSets.companyId, this.newTestSets.companyName);
+        this.testSelectedCompany.companyId = this.newTestSets.companyId;
+        this.testSelectedCompany.companyName = this.newTestSets.companyName;
       });
     } else {
       this.newTestSets = new TestSets(0, 2, 1, 0, null, 10000, 10, null, 1);
@@ -185,8 +185,6 @@ export class TestPanelComponent implements OnInit {
   onCLickAddUrl(panelUrlId: number) {
     this.chartsUrlList[panelUrlId - 1] = (<HTMLInputElement>document.getElementById("urlPanelId" + panelUrlId)).value;
     return this.sanitizer.bypassSecurityTrustUrl( this.chartsUrlList[panelUrlId - 1]);
-
-    console.log(this.chartsUrlList)
   }
 
 }

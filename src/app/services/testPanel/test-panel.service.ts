@@ -14,8 +14,16 @@ export class TestPanelService {
 
   
   doTest(testSets: TestSets){
-    const params = new HttpParams().set('testSets', testSets.toString());
-    return this.http.get<TestDetails[]>(this.apiTestUrl + '/simulate?' + params);
+    const params = new HttpParams()
+    .set('numberUser', testSets.numberOfUsers.toString())
+    .set('numberSeries', testSets.series.toString())
+    .set('companyId', testSets.companyId.toString())
+    .set('companyName', testSets.companyName)
+    .set('startUserMoney', testSets.startUserMoney.toString())
+    .set('startStockNumber', testSets.startStockNumber.toString())
+    .set('testName', testSets.testName)
+    .set('daysNumber', testSets.days.toString());
+        return this.http.get<TestDetails[]>(this.apiTestUrl + '/simulate?' + params);
   }
 
   getAllTestDetails(){

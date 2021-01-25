@@ -55,7 +55,7 @@
                 <mat-form-field style="width: 65px;margin:5px">
                     <mat-label>Series</mat-label>
                     <input type="number" min="1" [(ngModel)]="newTestSets.series"
-                        [formControl]="testSeriesNumberFormControl" matInput placeholder="Series">
+                        [formControl]="testSeriesNumberFormControl" matInput placeholder="Series" required>
                     <mat-error *ngIf="testSeriesNumberFormControl.hasError('required')">
                         Series number is <strong>required</strong>
                     </mat-error>
@@ -66,7 +66,7 @@
                 <mat-form-field style="width: 65px; margin:5px">
                     <mat-label>Users</mat-label>
                     <input type="number" min="1" [(ngModel)]="newTestSets.numberOfUsers"
-                        [formControl]="testUserNumberFormControl" matInput placeholder="User">
+                        [formControl]="testUserNumberFormControl" matInput placeholder="User" required>
                     <mat-error *ngIf="testUserNumberFormControl.hasError('required')">
                         Users number is <strong>required</strong>
                     </mat-error>
@@ -77,7 +77,7 @@
                 <mat-form-field style="width: 90px; margin:5px">
                     <mat-label>Start user money</mat-label>
                     <input type="number" min="1000" [(ngModel)]="newTestSets.startUserMoney"
-                        [formControl]="testStartUserMoneyFormControl" matInput placeholder="Start user money">
+                        [formControl]="testStartUserMoneyFormControl" matInput placeholder="Start user money" required>
                     <mat-error *ngIf="testStartUserMoneyFormControl.hasError('required')">
                         Start user money is <strong>required</strong>
                     </mat-error>
@@ -90,7 +90,7 @@
                 <mat-form-field style="width: 100px; margin:5px">
                     <mat-label>Start number stock</mat-label>
                     <input type="number" min="1" [(ngModel)]="newTestSets.startStockNumber"
-                        [formControl]="testStartStockNumberFormControl" matInput placeholder="Start number stock">
+                        [formControl]="testStartStockNumberFormControl" matInput placeholder="Start number stock" required>
                     <mat-error *ngIf="testStartStockNumberFormControl.hasError('required')">
                         Start number stock is <strong>required</strong>
                     </mat-error>
@@ -104,7 +104,7 @@
                 <mat-form-field style="width: 90px; margin:5px">
                     <mat-label>Days</mat-label>
                     <input type="number" min="1" [(ngModel)]="newTestSets.days" [formControl]="testDaysFormControl"
-                        matInput placeholder="Start user money">
+                        matInput placeholder="Start user money" required>
                     <mat-error *ngIf="testDaysFormControl.hasError('required')">
                         Days number is <strong>required</strong>
                     </mat-error>
@@ -117,14 +117,14 @@
                 <mat-form-field style="width: 200px; margin:5px">
                     <mat-label>Test name</mat-label>
                     <input type="text" [(ngModel)]="newTestSets.testName" [formControl]="testNameFormControl" matInput
-                        placeholder="Test name">
+                        placeholder="Test name" required>
                     <mat-error *ngIf="testNameFormControl.hasError('required')">
                         Test name is <strong>required</strong>
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" style="width: 140px; margin:5px;">
                     <mat-label>Company</mat-label>
-                    <mat-select [(value)]="testSelectedCompany.companyId" [formControl]="testChosedCompanyFormControl">
+                    <mat-select [(ngModel)]="testSelectedCompany.companyId" [formControl]="testChosedCompanyFormControl" required>
                         <mat-option *ngFor="let company of testCompanyList" [value]="company.companyId">
                             {{company.companyName}}
                         </mat-option>
