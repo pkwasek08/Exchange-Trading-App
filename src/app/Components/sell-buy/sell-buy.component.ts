@@ -112,7 +112,7 @@ export class SellBuyComponent implements OnInit {
 
   validateOffer(amount: number, price: number, type: string) {
     if (type === 'Buy') {
-      if (this.loggedUser.cash == null || (this.loggedUser.cash !== null && price > this.loggedUser.cash)) {
+      if (this.loggedUser.cash == null || (this.loggedUser.cash !== null && price * amount > this.loggedUser.cash)) {
         this.snackBar.open('You don\'t have enough money to accept this transaction', 'x', {
           panelClass: 'custom-css-class-warming',
           duration: 3000,
@@ -362,7 +362,7 @@ export class SellBuyComponent implements OnInit {
   }
 
   getActualValueUserStock() {
-    return this.getActualValueStockFromLimitOrderList(this.stockUser.amount, this.buyLimitOrder, false);
+    return this.getActualValueStockFromLimitOrderList(this.stockUser.amount, this.sellLimitOrder, false);
   }
 
   getActualValueStock(amount: number, type: string) {

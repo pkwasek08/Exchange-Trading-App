@@ -2,7 +2,7 @@
 </h1>
 <mat-dialog-content id="loginDialogId">
     <form class="login-form" style="font-size: 20px;">
-        <table>
+        <table style="text-align:center">
             <tr>
                 <td>
                     <mat-form-field>
@@ -71,7 +71,7 @@
             <tr>
                 <td colspan="2">
                     <div class="form-group" style="margin-top: 20px;">
-                        <button class="btn btn-secondary" style="margin-left: 25%;" (click)="close()">
+                        <button class="btn btn-secondary" (click)="close()">
                             Cancel
                         </button>
                         <button [disabled]="!isValid()" class="btn btn-primary" (click)="login()" type="submit">

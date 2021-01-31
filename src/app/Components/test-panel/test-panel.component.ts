@@ -187,4 +187,8 @@ export class TestPanelComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustUrl( this.chartsUrlList[panelUrlId - 1]);
   }
 
+  onCLickResetChart(panelId: number) {
+    this.chartsUrlList[panelId - 1] = '';
+  }
+
 }

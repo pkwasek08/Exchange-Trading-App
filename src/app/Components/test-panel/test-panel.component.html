@@ -1,39 +1,22 @@
 <div style="display: flex;">
     <div style="width: min-content;">
         <div *ngIf="chartsUrlList[0] != ''"
-            style="width: 500px; height: 205px; background: white; border-radius: 10px; font-family: Palatino; text-align: center;">
-            <iframe [src]="chartsUrlList[0] | safe: 'resourceUrl'" width="480" height="200" frameborder="0"></iframe>
-        </div>
-        <div *ngIf="chartsUrlList[1] != ''"
-            style="width: 500px; height: 205px; background: white; border-radius: 10px; font-family: Palatino; text-align: center;  margin-top: 10px;">
-            <iframe [src]="chartsUrlList[1] | safe: 'resourceUrl'" width="480" height="200"
-                frameborder="0"></iframe>
+            style="width: 430px; height:  418px; background: white; border-radius: 10px; font-family: Palatino; text-align: center;">
+            <iframe [src]="chartsUrlList[0] | safe: 'resourceUrl'" width="400" height="385" frameborder="0" style="margin-top: 10px;"></iframe>
+            <button mat-button (click)="onCLickResetChart(1)"
+                style="margin-left: 360px; line-height: 17px;">Reset</button>
         </div>
         <div *ngIf="chartsUrlList[0] == ''"
-            style="width: 500px; height: 205px; background: white; border-radius: 10px; font-family: Palatino; text-align: center;">
+            style="width: 430px; height:  418px; background: white; border-radius: 10px; font-family: Palatino; text-align: center;">
             <mat-form-field style="text-align: center; margin-top: 30px;">
                 <mat-label>Url panel</mat-label>
-                <input id="urlPanelId1" type="text"
-                    [formControl]="testUrlPanelFormControl" matInput placeholder="Url panel">
+                <input id="urlPanelId1" type="text" [formControl]="testUrlPanelFormControl" matInput
+                    placeholder="Url panel">
                 <mat-error *ngIf="testNameFormControl.hasError('required')">
                     Url is <strong>required</strong>
                 </mat-error>
             </mat-form-field><br />
             <button type="button" class="btn btn-secondary" (click)="onCLickAddUrl(1)"
-                style="width:110px; margin-top: 30px; font-size: 20px;">Add</button>
-        </div>
-        <div *ngIf="chartsUrlList[1] == ''"
-            style="width: 500px; height: 205px; background: white; border-radius: 10px; font-family: Palatino; text-align: center; margin-top: 10px;">
-            <mat-form-field style="text-align: center; margin-top: 30px;">
-                <mat-label>Url panel</mat-label>
-                <input id="urlPanelId2" type="text" [formControl]="testUrlPanelFormControl"
-                    matInput placeholder="Url panel">
-                <mat-error *ngIf="testNameFormControl.hasError('required')">
-                    Url is <strong>required</strong>
-                </mat-error>
-            </mat-form-field>
-            <br />
-            <button type="button" class="btn btn-secondary" (click)="onCLickAddUrl(2)"
                 style="width:110px; margin-top: 30px; font-size: 20px;">Add</button>
         </div>
     </div>
@@ -90,7 +73,8 @@
                 <mat-form-field style="width: 100px; margin:5px">
                     <mat-label>Start number stock</mat-label>
                     <input type="number" min="1" [(ngModel)]="newTestSets.startStockNumber"
-                        [formControl]="testStartStockNumberFormControl" matInput placeholder="Start number stock" required>
+                        [formControl]="testStartStockNumberFormControl" matInput placeholder="Start number stock"
+                        required>
                     <mat-error *ngIf="testStartStockNumberFormControl.hasError('required')">
                         Start number stock is <strong>required</strong>
                     </mat-error>
@@ -124,7 +108,8 @@
                 </mat-form-field>
                 <mat-form-field appearance="fill" style="width: 140px; margin:5px;">
                     <mat-label>Company</mat-label>
-                    <mat-select [(ngModel)]="testSelectedCompany.companyId" [formControl]="testChosedCompanyFormControl" required>
+                    <mat-select [(ngModel)]="testSelectedCompany.companyId" [formControl]="testChosedCompanyFormControl"
+                        required>
                         <mat-option *ngFor="let company of testCompanyList" [value]="company.companyId">
                             {{company.companyName}}
                         </mat-option>
@@ -146,39 +131,24 @@
         </table>
     </div>
     <div style="margin-left: 10px;">
-        <div *ngIf="chartsUrlList[2] != ''"
-            style="width: 500px; height: 200px; background: white; border-radius: 10px; font-family: Palatino; text-align: center;">
-            <iframe [src]="chartsUrlList[2] | safe: 'resourceUrl'" width="480" height="200" frameborder="0"></iframe>
+        <div *ngIf="chartsUrlList[1] != ''"
+            style="width: 430px; height: 418px; background: white; border-radius: 10px; font-family: Palatino; text-align: center;">
+            <iframe [src]="chartsUrlList[1] | safe: 'resourceUrl'" width="400" height="385" frameborder="0" style="margin-top: 10px;"></iframe>
+            <button mat-button (click)="onCLickResetChart(2)"
+                style="margin-left: 360px; line-height: 17px;">Reset</button>
         </div>
-        <div *ngIf="chartsUrlList[3] != ''"
-            style="width: 500px; height: 205px; background: white; border-radius: 10px; font-family: Palatino; text-align: center; margin-top: 10px;">
-            <iframe [src]="chartsUrlList[3] | safe: 'resourceUrl'" width="480" height="200" frameborder="0"></iframe>
-        </div>
-        <div *ngIf="chartsUrlList[2] == ''"
-            style="width: 500px; height: 200px; background: white; border-radius: 10px; font-family: Palatino; text-align: center;">
+        <div *ngIf="chartsUrlList[1] == ''"
+            style="width: 430px; height: 418px; background: white; border-radius: 10px; font-family: Palatino; text-align: center;">
             <mat-form-field style="text-align: center; margin-top: 30px;">
                 <mat-label>Url panel</mat-label>
-                <input type="text" id="urlPanelId3" [formControl]="testUrlPanelFormControl"
-                    matInput placeholder="Url panel">
+                <input type="text" id="urlPanelId2" [formControl]="testUrlPanelFormControl" matInput
+                    placeholder="Url panel">
                 <mat-error *ngIf="testNameFormControl.hasError('required')">
                     Url is <strong>required</strong>
                 </mat-error>
             </mat-form-field><br />
             <button type="button" class="btn btn-secondary" style="width:110px; margin-top: 30px; font-size: 20px;"
-                (click)="onCLickAddUrl(3)">Add</button>
-        </div>
-        <div *ngIf="chartsUrlList[3] == ''"
-            style="width: 500px; height: 205px; background: white; border-radius: 10px; font-family: Palatino; text-align: center; margin-top: 10px;">
-            <mat-form-field style="text-align: center; margin-top: 30px;">
-                <mat-label>Url panel</mat-label>
-                <input type="text" id="urlPanelId4" [formControl]="testUrlPanelFormControl"
-                    matInput placeholder="Url panel">
-                <mat-error *ngIf="testNameFormControl.hasError('required')">
-                    Url is <strong>required</strong>
-                </mat-error>
-            </mat-form-field><br />
-            <button type="button" class="btn btn-secondary" style="width:110px; margin-top: 30px; font-size: 20px;"
-                (click)="onCLickAddUrl(4)">Add</button>
+                (click)="onCLickAddUrl(2)">Add</button>
         </div>
     </div>
 </div>
