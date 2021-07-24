@@ -1,27 +1,51 @@
-# AngularApp
+# Exchange Trading - frontend application
+This project is frontend client app, It's part of Exchange Trading project. This application is common for [Exchange-Trading-Api](https://github.com/pkwasek08/Exchange-Trading) and [Echange-Trading-Tester](https://github.com/pkwasek08/Exchange-Trading-Tester).
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.
+## Main functions
+- table of noticed companies
+- panel of stock transactions
+- specific companie statistic
+- user's history transactions
+- user's depozit
+- execution and managment limit offerts and immediate transactions
+- orderbook
+- price and volumen stocks plot
 
-## Development server
+## Technologies
+- NodeJs >= 10.13.0
+- Angular 9
+- Docker
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Graphic library
+- Angular Material
+- Bootstrap 4.5.3
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Setup
+Install node_modules packages:  
+```
+npm install
+```
+Then app is ready to start. App can start using npm:
+```
+npm start
+```
+or use Docker. Firstly, you must build application:
+```
+ng build
+```
+Then, you can create custom Docker image which including Exchange-Trading-App:
+```
+docker build -t <image_name>:<tag> .
+```
+To run application on Docker you must start container:
+```
+docker run -d -p 4200:4200 <image_name>
+```
+Default running adress is ``localhost:4200``. If you use Docker, you can always change port using flag ``-p``. To run application without Docker you can change default port in angular settings (``protractor.conf.js`` file) or use
+```
+ng serve --port <custom_port>
+```
+## Linked repositoris
+* [Exchange-Trading-Api](https://github.com/pkwasek08/Exchange-Trading)    
+* [Exchange-Trading-Tester](https://github.com/pkwasek08/Exchange-Trading-Tester)  
+* [Exchange-Trading-DevOps](https://github.com/pkwasek08/Exchange-Trading-DevOps)
